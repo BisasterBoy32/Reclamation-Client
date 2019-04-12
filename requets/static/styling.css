@@ -1,0 +1,79 @@
+body{
+  background-color: #ffffff;
+}
+.helptext{
+  font-size: 14px;
+  color: #333333;
+  margin-left: 20px;
+}
+.inscrire{
+  width : 50%;
+  margin : auto;
+
+}
+.errorlist{
+  list-style-type: none;
+  color : #800000 ;
+  border-radius: 2px;
+  background-color:   #ffcccc;
+}
+ul{
+  /* margin-top: -30px; */
+  /* list-style-type: none; */
+  /* margin-left: -20px;
+  font-size: 14px; */
+}
+
+
+#AT{
+  width: 200px;
+  height: 80px;
+  vertical-align: bottom;
+}
+.header{
+  height: 120px;
+  background-color: #99ff99;
+  font-family: 'Libre Baskerville', serif;
+}
+.register ,.login{
+  background-color: #b3b3b3;
+  border-radius: 5px;
+}
+.login {
+  height: 400px;
+}
+
+.icon-h{
+  width : 60px;
+  height: 30px;
+  vertical-align: bottom;
+}
+
+
+/* -------------------------------       nav bar styling ---------------------------------------------------*/
+
+
+.navbar-custom {
+    background-color: #66ff66;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: #000000;
+}
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: #000000;
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+nav {
+    font-family: 'Libre Baskerville', serif;
+}
+.register-icon{
+  width : 30%;
+  margin: auto;
+}

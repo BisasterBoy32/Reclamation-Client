@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm , UserChangeForm
 from .models import Profile
 from django.utils.translation import gettext_lazy as _
+
 
 
 class UserForm(UserCreationForm):
@@ -95,4 +96,30 @@ class ProfileForm(forms.ModelForm):
         }
         labels = {
             "location" : ""
+        }
+
+# <------------------------------- changing user information form ----------------------------->
+
+#get all the existing emails
+
+
+class UserChangeInfoForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ("first_name","last_name","email")
+        widgets = {
+        "first_name" : forms.TextInput(attrs={ "class":"form-control first-name" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Nom"}),
+        "last_name" : forms.TextInput(attrs={ "class":"form-control last-name" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Prénom"}),
+        "email" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Email Adress"}),
+        }
+
+
+class ProfileChangeForm(forms.ModelForm):
+
+    class Meta :
+        model = Profile
+        fields = ["location"]
+        widgets = {
+                    "location" : forms.TextInput(attrs={ "class":"form-control location" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Location"}),
         }

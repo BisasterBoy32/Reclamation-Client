@@ -20,7 +20,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
       <div class="container">
-            <a class="navbar-brand" href="#"><img class="icon-h" src="{% static 'img/algerieT.png' %}"> Algerie Telecom</a>
+            <a class="navbar-brand" href="{% url 'home' %}"><img class="icon-h" src="{% static 'img/algerieT.png' %}"> Algerie Telecom</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -33,17 +33,25 @@
               </ul>
               <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Siuvi vote Requete</a>
+                  <a href="#" class="nav-link">Siuvi vote Requetes</a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link">Cree un Requet</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link"><i class="far fa-address-card fa-lg"></i></a>
+                  <a href="{% url 'client_info'%}" class="nav-link">{{ user.username }} <i class="far fa-address-card fa-lg"></i></a>
+                </li>
+                <li class="nav-item">
+                  <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt fa-lg"></i></i></a>
                 </li>
             </div>
           </div>
         </nav>
+
+        <form  id="logout" action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" >
+        </form>
 
 
 

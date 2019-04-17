@@ -1,0 +1,36 @@
+{% extends 'requets/base2.html' %}
+
+{% block content %}
+
+<div class="container border  p-1 m-3 radius">
+
+<div class="header-siuvi p-3 m-1 radius" >
+  <div class="row mb-3 border-bottom pb-2 ">
+    <div class="col-md-8 col-9">
+      Votre Requets
+    </div>
+    <div class="col-md-2 col-3">
+      Client
+    </div>
+  </div>
+
+
+  {% for requet in requets %}
+  <a href="{% url 'requet_info' requet.client.id requet.id %}" class="a-simple" >
+    <div class="row mt-3 border-bottom pb-2 ">
+
+        <div class="col-md-8 col-9">
+          {{ requet.summary }}
+        </div>
+        <div class="col-md-4 col-3">
+          {{ requet.client }}
+        </div>
+
+    </div>
+  </a>
+  {% endfor %}
+  </div>
+</div>
+
+
+{% endblock %}

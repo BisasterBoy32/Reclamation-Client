@@ -1,0 +1,19 @@
+{% extends 'requets/base.html' %}
+
+{% block content %}
+
+<div class="border p-3 m-4 header-siuvi radius">
+  <div class="alert alert-danger ">
+    <h4> {{ user.username }} Êtes-vous sûr de vouloir supprimer cette requete?</h4>
+  </div>
+<form  action="{% url 'delete_requete' requet.id %}" method="post" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-outline-danger btn-sm"> Suprimer </button>
+  <a href="{% url 'siuvi_requete' %}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+
+</form>
+</div>
+
+
+
+{% endblock %}

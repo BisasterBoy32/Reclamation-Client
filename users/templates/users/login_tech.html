@@ -29,13 +29,9 @@
       </div>
       {% endfor %}
       {% endif %}
-        <div class="row">
-          <div class="col-md-5 col-xs-12 ">
-                <div class="register-icon">
-                    <i class="fas fa-sign-in-alt fa-7x"></i>
-                </div>
-            <div class="p-3 login">
-                <form action="{% url 'login' %}" method="POST">
+
+            <div class="p-3 login-tech">
+                <form action="{% url 'login_tech' %}" method="POST">
                   {% csrf_token %}
 
                   <legend class="text-center border-bottom mb-4"> Login </legend>
@@ -57,41 +53,11 @@
                       <input type="checkbox" class="form-check-input" id="exampleCheck1">
                       <label class="form-check-label" for="exampleCheck1">garder mes informations</label>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-sm inscrire mb-1">Login</button>
+                    <button type="submit" class="btn btn-primary ">Login</button>
                     <small class="text-muted">Avez-vous oublié votre mot de passe? réinitialiser à partir d' <a href="{% url 'reset_password' %}">ici</a></small>
                   </form>
             </div>
 
-          </div>
-
-
-          <div class="col-md-1 col-xs-0 ">
-
-          </div>
-
-
-          <div class="col-md-6 col-xs-12 ">
-            <div class="register-icon">
-                <i class="fas fa-user-plus fa-7x "></i>
-            </div>
-            <div class="register  p-3 ">
-              <form  action="{% url 'register' %}" method="post">
-                {% csrf_token %}
-
-                <legend class="text-center border-bottom mb-4"> S'inscrire</legend>
-                {{ u_form.as_p }}
-                {{ p_form.as_p }}
-                <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">S'inscrire</button>
-              </form>
-          </div>
-        </div>
-
-        </div>
-
-
-
-
-    </div>
 
 
 

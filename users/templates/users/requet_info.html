@@ -1,0 +1,49 @@
+{% extends 'requets/base2.html' %}
+
+{% block content %}
+
+<div class="container border p-4 m-4">
+  <p> {{ requet.content }}</p><br>
+</div>
+
+
+<div class="border mt-4 radius centered ">
+
+  <div class="header-siuvi p-3 m-1 radius" >
+    <div class="text-center">
+        <h2> {{ client.username }} informations </h2>
+      </div>
+
+    </div>
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        First Name
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.first_name }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Last Name
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.last_name }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Location
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.location }}
+      </div>
+    </div>
+    <button type="button" class="btn btn-block btn-sm btn-outline-success inscrire mb-1"> Problème résolu</button>
+  </div>
+
+
+
+{% endblock %}

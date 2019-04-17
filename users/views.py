@@ -1,10 +1,14 @@
-from django.shortcuts import render ,redirect
+from django.shortcuts import render ,redirect , get_object_or_404
 from django.contrib.auth.models import User
 from .models import Profile
+from requets.models import Requet
 from .forms import UserForm , ProfileForm , UserChangeInfoForm ,ProfileChangeForm
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.views.generic import DetailView
+from django.contrib.auth.mixins import UserPassesTestMixin , LoginRequiredMixin
 
 
 # Create your views here.
@@ -80,3 +84,46 @@ def logout_view(request):
     if request.method == 'POST':
         auth.logout(request)
         return redirect("login")
+
+# class ClientDetailView(UserPassesTestMixin , LoginRequiredMixin ,DetailView):
+#     model = User
+#     template_name = "users/client_detail.html"
+#     context_object_name = "client"
+#
+#     def test_func(self):
+#         return self.request.user.profile.group == "tech"
+
+def requet_info(request ,id_client,id_requet ):
+    client = get_object_or_404(User , pk = id_client)
+    requet = get_object_or_404(Requet , pk=id_requet)
+
+    context = {"client":client,"requet" :requet}
+    if request.user.profile.group == "tech":
+        return render(request, "users/requet_info.html" ,context)
+    else :
+        return HttpResponse("<h1>403 Forbidden</h1>")
+
+
+
+# <--------------------------------- tech part ---------------------------------------->
+
+def login_tech(request):
+
+    if request.method == 'POST':
+        username = request.POST["username"]
+        password = request.POST["password"]
+
+        user = auth.authenticate(username = username , password = password)
+        if user and user.profile.group == "tech" :
+            auth.login(request ,user)
+            return redirect("tech_requets")
+
+        elif user ==  None :
+            error = "nom d'utilisateur ou mot de passe n'est pas correcte"
+            return render(request,"users/login_tech.html",{"error":error})
+
+        else :
+            return HttpResponse("<h2> 403 Forbidden </h2>")
+
+
+    return render(request ,"users/login_tech.html")

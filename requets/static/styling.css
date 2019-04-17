@@ -1,5 +1,5 @@
 body{
-  background-color: #ffffff;
+  background-color: #d6f8b8;
 }
 .helptext{
   font-size: 14px;
@@ -35,12 +35,16 @@ ul{
   background-color: #99ff99;
   font-family: 'Libre Baskerville', serif;
 }
-.register ,.login{
-  background-color: #b3b3b3;
+.register ,.login ,.login-tech{
+  background-color: #acdeaa;
   border-radius: 5px;
 }
 .login {
-  height: 400px;
+  height: 460px;
+}
+.login-tech {
+  height: 460px;
+  width: 500px;
 }
 
 .icon-h{
@@ -49,18 +53,36 @@ ul{
   vertical-align: bottom;
 }
 .change-info{
-  background-color: #b3b3b3;
+  background-color: #acdeaa;
   border-radius: 5px;
   width : 50%;
   margin: auto;
 }
+.header-siuvi{
+  background-color: #acdeaa;
+}
+.radius{
+  border-radius: 5px;
+}
+.centered {
+  width: 50%;
+  margin: auto;
+}
+.a-simple{
+  text-decoration: none;
+  color: black;
+}
+.a-simple:hover{
+  text-decoration: none;
+  color: black;
+}
 
 
-/* -------------------------------       nav bar styling ---------------------------------------------------*/
+/* ------------------------------- 66ff66      nav bar styling ---------------------------------------------------*/
 
 
 .navbar-custom {
-    background-color: #66ff66;
+    background-color: #8fbbaf;
 }
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
@@ -90,9 +112,13 @@ nav {
 @media only screen and (max-width: 1000px) {
 
   .change-info{
-    background-color: #b3b3b3;
+    background-color: #acdeaa;
     border-radius: 5px;
     width : 100%;
+  }
+  .centered {
+    width: 100%;
+    margin: auto;
   }
 
 }

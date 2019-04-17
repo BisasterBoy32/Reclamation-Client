@@ -1,0 +1,26 @@
+{% extends 'requets/base.html' %}
+
+{% block content %}
+
+
+<div class="change-info mt-4 p-4">
+
+  <form  action="{% url 'create_requete' %}" method="post">
+    {% csrf_token %}
+
+    <legend class="text-center border-bottom mb-4"> écrivez une description de votre problème </legend>
+    {% if error1 %}
+    <div class="errorlist">
+            {{ error1 }}
+    </div>
+
+    {% endif %}
+    {{ form.as_p }}
+    <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">Réclamer </button>
+  </form>
+
+</div>
+
+
+
+{% endblock %}

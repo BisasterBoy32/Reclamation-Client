@@ -20,29 +20,17 @@
     <!-- navbar -->
     <nav class="navbar navbar-light navbar-expand-lg navbar-custom">
       <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}"><img class="icon-h" src="{% static 'img/algerieT.png' %}"> Algerie Telecom</a>
+            <a class="navbar-brand" href="{% url 'tech_requets' %}"><img class="icon-h" src="{% static 'img/algerieT.png' %}"> Algerie Telecom</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">About Us</a>
-                </li>
 
               </ul>
               <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
-                  <a href="{% url 'siuvi_requete' %}" class="nav-link">Siuvi votre Requetes</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{% url 'create_requete' %}" class="nav-link">Cree un Requet</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{% url 'client_info'%}" class="nav-link">{{ user.username }} <i class="far fa-address-card fa-lg"></i></a>
-                </li>
-                <li class="nav-item">
-                  <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt fa-lg"></i></i></a>
+                  <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt fa-lg"></i></a>
                 </li>
             </div>
           </div>

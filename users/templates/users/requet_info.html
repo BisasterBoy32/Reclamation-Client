@@ -7,6 +7,8 @@
 </div>
 
 
+{% if requet.client.profile.type == "personne"%}
+
 <div class="border mt-4 radius centered ">
 
   <div class="header-siuvi p-3 m-1 radius" >
@@ -20,7 +22,7 @@
         First Name
       </div>
       <div class="text-center col-6 ">
-        {{ client.first_name }}
+        {{ client.profile.personne.first_name }}
       </div>
     </div>
 
@@ -29,7 +31,7 @@
         Last Name
       </div>
       <div class="text-center col-6 ">
-        {{ client.last_name }}
+        {{ client.profile.personne.last_name }}
       </div>
     </div>
 
@@ -41,9 +43,87 @@
         {{ client.profile.location }}
       </div>
     </div>
-    <button type="button" class="btn btn-block btn-sm btn-outline-success inscrire mb-1"> Problème résolu</button>
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Telephone FIx
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.phone_number }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+       Date De Réclamation
+       </div>
+        <div class="text-center col-6 ">
+        {{ requet.pub_date|date:"d M Y, h : m" }}
+       </div>
+    </div>
+
+    <form action="{% url 'problem_fixed' requet.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-block btn-sm btn-outline-success inscrire mb-1"> Problème résolu</button>
+    </form>
+
+  </div>
+{% elif requet.client.profile.type == "entreprise"%}
+
+
+<div class="border mt-4 radius centered ">
+
+  <div class="header-siuvi p-3 m-1 radius" >
+    <div class="text-center">
+        <h2> L'entreprise {{ client.username }}  informations </h2>
+      </div>
+
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Name
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.company.name }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Location
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.location }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Telephone FIx
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.phone_number }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Date De Réclamation
+      </div>
+      <div class="text-center col-6 ">
+        {{  requet.pub_date|date:"d M Y, h : m" }}
+      </div>
+    </div>
+
+    <form action="{% url 'problem_fixed' requet.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-block btn-sm btn-outline-success inscrire mb-1"> Problème résolu</button>
+    </form>
+    
   </div>
 
+
+{% endif %}
 
 
 {% endblock %}

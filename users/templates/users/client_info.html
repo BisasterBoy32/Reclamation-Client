@@ -2,25 +2,52 @@
 
 {% block content %}
 
+  {% if request.user.profile.type == "personne" %}
+        <div class="change-info mt-4 p-4">
 
-<div class="change-info mt-4 p-4">
+          <form  action="{% url 'client_info' %}" method="post">
+            {% csrf_token %}
 
-  <form  action="{% url 'client_info' %}" method="post">
-    {% csrf_token %}
+            <legend class="text-center border-bottom mb-4">les information de {{ user }} client</legend>
+            {% if error1 %}
+            <div class="errorlist">
+                    {{ error1 }}
+            </div>
 
-    <legend class="text-center border-bottom mb-4">les information de {{ user }} client</legend>
-    {% if error1 %}
-    <div class="errorlist">
-            {{ error1 }}
-    </div>
+            {% endif %}
+            {{ ps_form.as_p }}
+            {{ u_form.as_p }}
+            {{ p_form.as_p }}
 
-    {% endif %}
-    {{ u_form.as_p }}
-    {{ p_form.as_p }}
-    <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">Changer mes information </button>
-  </form>
+            <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">Changer mes information </button>
+          </form>
 
-</div>
+        </div>
+
+  {% else %}
+
+  <div class="change-info mt-4 p-4">
+
+    <form  action="{% url 'entreprise_info' %}" method="post">
+      {% csrf_token %}
+
+      <legend class="text-center border-bottom mb-4">les information de {{ user }} client</legend>
+      {% if error1 %}
+      <div class="errorlist">
+              {{ error1 }}
+      </div>
+
+      {% endif %}
+      {{ c_form.as_p }}
+      {{ u_form.as_p }}
+      {{ p_form.as_p }}
+
+      <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">Changer mes information </button>
+    </form>
+
+  </div>
+
+  {% endif %}
 
 
 

@@ -20,35 +20,20 @@
     <!-- navbar -->
     <nav class="navbar navbar-light navbar-expand-lg navbar-custom">
       <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}"><img class="icon-h" src="{% static 'img/algerieT.png' %}"> Algerie Telecom</a>
+            <a class="navbar-brand" href="{% url 'manager_home' %}"><img class="icon-h" src="{% static 'img/algerieT.png' %}"> Algerie Telecom Administrateur </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">About Us</a>
-                </li>
-
+                  <!-- right side -->
               </ul>
               <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
-                  <a href="{% url 'siuvi_requete' %}" class="nav-link">Siuvi votre Requetes</a>
+                  <a href="{% url 'siuvi_requete' %}" class="nav-link">ajouter un nouvel administrateur compte</a>
                 </li>
                 <li class="nav-item">
-                  <a href="{% url 'create_requete' %}" class="nav-link">Cree un Requet</a>
-                </li>
-                {% if user.profile.type == "personne" %}
-                <li class="nav-item">
-                  <a href="{% url 'client_info'%}" class="nav-link">{{ user.username }} <i class="far fa-address-card fa-lg"></i></a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                  <a href="{% url 'entreprise_info'%}" class="nav-link">{{ user.username }} <i class="far fa-address-card fa-lg"></i></a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                  <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt fa-lg"></i></i></a>
+                  <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt fa-lg"></i></a>
                 </li>
             </div>
           </div>
@@ -62,6 +47,7 @@
 
 
         <div class="container">
+
           {% if messages %}
           {% for message in messages %}
             {% if message.tags == "error" %}
@@ -75,6 +61,51 @@
               {% endif %}
             {% endfor %}
           {% endif %}
+
+
+          <div class="row ml-4 centered2">
+
+              <a class="a-simple" href="#">
+                <div class="col-3 mt-4">
+                  <div class="m-3 p-3 client ">
+                      <div class="centered1"> <i class="fas fa-user-tie fa-2x"></i>  </div>
+                      <h5 class="text-center mt-2">  Clients </h5>
+                      <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
+                  </div>
+                </div>
+              </a>
+
+              <a class="a-simple" href="#">
+                <div class="col-3 mt-4">
+                  <div class="m-3 p-3 client ">
+                      <div class="centered1"> <i class="fas fa-users-cog fa-2x"></i>  </div>
+                      <h5 class="text-center mt-2"> Technician </h5>
+                      <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
+                  </div>
+                </div>
+              </a>
+
+              <a class="a-simple" href="{% url 'manager_requets' %}">
+                <div class="col-3 mt-4">
+                  <div class="m-3 p-3 client ">
+                      <div class="centered1"> <i class="fas fa-file-alt fa-2x"></i>  </div>
+                      <h5 class="text-center mt-2">  Recalamation </h5>
+                      <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
+                  </div>
+                </div>
+              </a>
+
+              <a class="a-simple" href="#">
+                <div class="col-3 mt-4">
+                  <div class="m-3 p-3 client ">
+                      <div class="centered1"> <i class="fas fa-calculator fa-2x"></i>  </div>
+                      <h5 class="text-center mt-2"> Statistiques </h5>
+                      <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
+                  </div>
+                </div>
+              </a>
+
+          </div>
 
           {% block content %}
           {% endblock %}

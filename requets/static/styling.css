@@ -68,6 +68,13 @@ ul{
   width: 50%;
   margin: auto;
 }
+.centered1 {
+  width: 20%;
+  margin: auto;
+}
+.centered2 {
+  margin: auto;
+}
 .a-simple{
   text-decoration: none;
   color: black;
@@ -76,7 +83,17 @@ ul{
   text-decoration: none;
   color: black;
 }
-
+.login-admin{
+  height: 460px;
+  width: 500px;
+  background-color: #75cac3;
+}
+.client{
+  background-color: #87e5da;
+  border-radius: 20px;
+  width : 200px;
+  border : 4px solid #fc6b3f;
+}
 
 /* ------------------------------- 66ff66      nav bar styling ---------------------------------------------------*/
 

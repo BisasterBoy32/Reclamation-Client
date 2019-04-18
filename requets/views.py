@@ -30,7 +30,8 @@ class RequetListView(ListView):
     context_object_name = "requets"
 
     def get_queryset(self):
-        return Requet.objects.filter(client = self.request.user).order_by("-pub_date")
+        requets = Requet.objects.filter(client = self.request.user).order_by("-pub_date")
+        return requets
 
 
 class RequetDeleteView(LoginRequiredMixin , UserPassesTestMixin ,DeleteView):
@@ -52,7 +53,7 @@ class TechRequetListView(LoginRequiredMixin , UserPassesTestMixin ,ListView):
     template_name = "requets/tech_list.html"
 
     def get_queryset(self):
-        return Requet.objects.filter(tech = self.request.user).order_by("-aprove_date")
+        return Requet.objects.filter(tech = self.request.user).order_by("client__profile__type","-pub_date")
 
     def test_func(self):
         return self.request.user.profile.group == "tech"

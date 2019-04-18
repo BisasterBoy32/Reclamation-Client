@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models import Count
 
 # Create your models here.
 class Requet(models.Model):
@@ -20,8 +21,10 @@ class Requet(models.Model):
 
     def aprove(self):
         self.aprove_date = timezone.now()
-        tech = User.objects.filter(profile__group == "tech").order_by("works").first()
+        tech = User.objects.filter(profile__group = "tech").annotate(requet_count = Count("works")).order_by("requet_count").first()
         self.tech = tech
+        self.state = "apprové par l'administrateur"
+        self.save()
 
     def summary(self):
         if len(self.content) > 100 :
@@ -29,5 +32,6 @@ class Requet(models.Model):
         else :
             return self.content
 
-    def Requet_fixed(self):
-        return self.state == "solved"
+    def requet_fixed(self):
+        self.state = "Problème Résolu"
+        self.save()

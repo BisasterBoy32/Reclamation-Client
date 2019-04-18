@@ -1,8 +1,8 @@
 from django.shortcuts import render ,redirect , get_object_or_404
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile ,Personne ,Company
 from requets.models import Requet
-from .forms import UserForm , ProfileForm , UserChangeInfoForm ,ProfileChangeForm
+from .forms import UserForm , ProfileForm , UserChangeInfoForm ,ProfileChangeForm ,PersonneChangeForm ,CompanyChangeForm
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -24,9 +24,10 @@ def register(request):
             u_profile = p_form.save(commit = False)
             u_profile.owner = user
             u_profile.save()
-            messages.success(request,f"l'utilisateur {user} a été créé avec succès")
-            return redirect("register")
-
+            if u_profile.type == "personne":
+                return redirect("register_personne" , id = u_profile.id )
+            elif u_profile.type == "entreprise":
+                return redirect("register_entreprise" , id = u_profile.id)
 
     else :
         u_form = UserForm()
@@ -34,6 +35,46 @@ def register(request):
 
     return render(request,"users/register.html" ,{"u_form":u_form ,"p_form":p_form})
 
+# <------------------ register as  a normal personne ----------------------------------------->
+
+def register_personne(request , id):
+
+    profile = get_object_or_404(Profile , pk = id)
+    if request.method == "POST":
+        first_name = request.POST["Nom"]
+        last_name = request.POST["Prénom"]
+
+        Personne.objects.create(first_name = first_name , last_name = last_name , profile = profile)
+        username = profile.owner.username
+        messages.success(request,f"l'utilisateur {username} a été créé avec succès")
+        auth.login(request , profile.owner)
+        return redirect("home")
+    else :
+        return render(request,"users/register_personne.html",{"c_profile" : profile})
+
+# <------------------ register as  a an entreprise ----------------------------------------->
+
+def register_entreprise(request , id):
+
+    profile = get_object_or_404(Profile , pk = id)
+    form = CompanyChangeForm()
+    if request.method == "POST":
+        form = CompanyChangeForm(request.POST)
+
+        if form.is_valid():
+            company = form.save(commit =False)
+            company.profile = profile
+            company.save()
+
+        username = profile.owner.username
+        messages.success(request,f"l'utilisateur {username} a été créé avec succès")
+        auth.login(request , profile.owner)
+        return redirect("home")
+    else :
+        return render(request,"users/register_entreprise.html",{"form":form ,"c_profile" : profile})
+
+
+# log in
 
 def login_view(request):
     u_form = UserForm()
@@ -54,31 +95,65 @@ def login_view(request):
     return render(request,"users/register.html",{"u_form":u_form,"p_form":p_form})
 
 
-# <----------------------------------- client informations ----------------------------------->
+# <----------------------------------- personne client informations ----------------------------------->
 
 @login_required
 def user_info(request):
     u_form = UserChangeInfoForm(instance = request.user )
     p_form = ProfileChangeForm(instance = request.user.profile )
+    ps_form = PersonneChangeForm(instance = request.user.profile.personne )
 
     if request.method == 'POST':
         u_form = UserChangeInfoForm( request.POST ,instance = request.user )
         p_form = ProfileChangeForm( request.POST , instance = request.user.profile )
+        ps_form = PersonneChangeForm( request.POST , instance = request.user.profile.personne )
 
-        if u_form.is_valid() and p_form.is_valid():
+        if u_form.is_valid() and p_form.is_valid() and ps_form.is_valid():
             email1 = u_form.cleaned_data["email"]
             if User.objects.filter(email = email1).exclude(username = request.user.username).exists():
                 error1 = "l'adresse e-mail que vous avez entrée est déjà enregistrée,"
-                return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"error1":error1})
+                return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"ps_form":ps_form,"error1":error1})
             else :
                 u_form.save()
                 p_form.save()
+                ps_form.save()
                 username = request.user.username
                 messages.success(request,f"Les informations d'utilisateur {username} ont été modifiées avec succès")
                 return redirect("client_info")
 
-    return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form})
+    return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"ps_form":ps_form})
 
+# <------------------------------- company client information ----------------------------------------->
+
+
+@login_required
+def entreprise_info(request):
+    u_form = UserChangeInfoForm(instance = request.user )
+    p_form = ProfileChangeForm(instance = request.user.profile )
+    c_form = CompanyChangeForm(instance = request.user.profile.company )
+
+    if request.method == 'POST':
+        u_form = UserChangeInfoForm( request.POST ,instance = request.user )
+        p_form = ProfileChangeForm( request.POST , instance = request.user.profile )
+        c_form = CompanyChangeForm( request.POST , instance = request.user.profile.company )
+
+        if u_form.is_valid() and p_form.is_valid() and c_form.is_valid():
+            email1 = u_form.cleaned_data["email"]
+            if User.objects.filter(email = email1).exclude(username = request.user.username).exists():
+                error1 = "l'adresse e-mail que vous avez entrée est déjà enregistrée,"
+                return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"c_form":c_form,"error1":error1})
+            else :
+                u_form.save()
+                p_form.save()
+                c_form.save()
+                username = request.user.username
+                messages.success(request,f"Les informations d'utilisateur {username} ont été modifiées avec succès")
+                return redirect("entreprise_info")
+
+    return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"c_form":c_form})
+
+
+# logout
 @login_required
 def logout_view(request):
     if request.method == 'POST':
@@ -127,3 +202,15 @@ def login_tech(request):
 
 
     return render(request ,"users/login_tech.html")
+
+def problem_fixed(request, id):
+    requet = get_object_or_404(Requet ,pk = id)
+    client = requet.client.username
+
+    if request.method == 'POST' and request.user.profile.group == "tech" :
+        requet.requet_fixed()
+        messages.success(request,f"Problème de client {client} est reésolu avec success")
+        return redirect("tech_requets")
+
+    else :
+        return HttpResponse("<h2> 403 Forbidden </h2>")

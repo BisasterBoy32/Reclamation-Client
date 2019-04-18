@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'manager.apps.ManagerConfig',
     'users.apps.UsersConfig',
     'requets.apps.RequetsConfig',
     'django.contrib.admin',

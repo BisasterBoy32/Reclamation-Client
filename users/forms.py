@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm , UserChangeForm
-from .models import Profile
+from .models import Profile ,Personne ,Company
 from django.utils.translation import gettext_lazy as _
 
 
@@ -10,19 +10,15 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ["username","first_name","last_name","email","password1","password2"]
+        fields = ["username","email","password1","password2"]
 
         widgets = {
         "username" : forms.TextInput(attrs={ "class":"form-control username" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Nom d'utilisateur"}),
-        "first_name" : forms.TextInput(attrs={ "class":"form-control first-name" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Nom"}),
-        "last_name" : forms.TextInput(attrs={ "class":"form-control last-name" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Prénom"}),
         "email" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Email Adress"}),
         }
 
         labels = {
             "username" : "",
-            "first_name" : "",
-            "last_name" : "",
             "email" : "",
         }
 
@@ -88,14 +84,26 @@ class UserForm(UserCreationForm):
 
 class ProfileForm(forms.ModelForm):
 
+
+
     class Meta :
+
+        TYPES = [
+                ( "personne" ,"UN PARTICULIER" ),
+                ( "entreprise" ,"UNE ENTREPRISE" )
+        ]
+
         model = Profile
-        fields = ["location"]
+        fields = ["location","phone_number","type"]
         widgets = {
                     "location" : forms.TextInput(attrs={ "class":"form-control location" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Location"}),
+                    "phone_number" : forms.TextInput(attrs={ "class":"form-control " ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre telephone fix"}),
+                    "type" : forms.Select(choices = TYPES ,attrs={ "class":"form-control " ,"id":"exampleFormControlSelect1" ,"aria-describedby":"emailHelp" ,"placeholder":"Location"}),
         }
         labels = {
-            "location" : ""
+            "location" : "",
+            "phone_number" : "",
+            "type" : " Je sius :"
         }
 
 # <------------------------------- changing user information form ----------------------------->
@@ -107,10 +115,8 @@ class UserChangeInfoForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("first_name","last_name","email")
+        fields = ("email",)
         widgets = {
-        "first_name" : forms.TextInput(attrs={ "class":"form-control first-name" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Nom"}),
-        "last_name" : forms.TextInput(attrs={ "class":"form-control last-name" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Prénom"}),
         "email" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Email Adress"}),
         }
 
@@ -119,7 +125,41 @@ class ProfileChangeForm(forms.ModelForm):
 
     class Meta :
         model = Profile
-        fields = ["location"]
+        fields = ["location","phone_number"]
         widgets = {
                     "location" : forms.TextInput(attrs={ "class":"form-control location" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Location"}),
+                    "phone_number" : forms.TextInput(attrs={ "class":"form-control " ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre telephone fix"}),
+        }
+
+        labels = {
+            "location" : "Votre Location",
+            "phone_number" : "Votre Telephone Fix",
+        }
+
+class PersonneChangeForm(forms.ModelForm):
+
+    class Meta:
+        model = Personne
+        fields = ["first_name","last_name"]
+
+        widgets = {
+                    "first_name" : forms.TextInput(attrs={ "class":"form-control location" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Nom"}),
+                    "last_name" : forms.TextInput(attrs={ "class":"form-control " ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Prenon"}),
+        }
+        labels = {
+            "first_name" : "Votre Nom",
+            "last_name" : "Votre Prénom",
+        }
+
+class CompanyChangeForm(forms.ModelForm):
+
+    class Meta:
+        model = Company
+        fields = ["name",]
+
+        widgets = {
+                    "name" : forms.TextInput(attrs={ "class":"form-control location" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"nom"}),
+        }
+        labels = {
+            "name" : "Entrer le non de votre entreprise",
         }

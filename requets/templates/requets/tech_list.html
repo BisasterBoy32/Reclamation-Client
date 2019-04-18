@@ -22,9 +22,15 @@
         <div class="col-md-8 col-9">
           {{ requet.summary }}
         </div>
+        {% if requet.client.profile.type == "entreprise" %}
         <div class="col-md-4 col-3">
-          {{ requet.client }}
+          <span class="mr-1">{{ requet.client }}</span> <i class="fas fa-building"></i>
         </div>
+        {% elif requet.client.profile.type == "personne" %}
+        <div class="col-md-4 col-3">
+          <span class="mr-1">{{ requet.client }}</span> <i class="fas fa-user"></i>
+        </div>
+        {% endif %}
 
     </div>
   </a>

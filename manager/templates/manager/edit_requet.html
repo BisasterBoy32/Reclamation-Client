@@ -1,0 +1,17 @@
+{% extends "manager/base3.html" %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="border p-3 m-4 header-siuvi radius">
+
+<form  action="{% url 'edit_requet' requet.id %}"  method="post">
+
+  {% csrf_token %}
+  {{ form|crispy  }}
+  <button type="submit" class="btn btn-primary btn-sm"> Modifier </button>
+
+</form>
+</div>
+
+{% endblock %}

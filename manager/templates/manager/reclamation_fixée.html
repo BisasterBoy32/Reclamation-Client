@@ -5,7 +5,7 @@
 
 
   <ul class="list-group ">
-   <a href="{% url 'manager_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
+   <a href="{% url 'manager_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
      Noveau Reclamation <span class="badge badge-primary badge-pill"> {{ user.profile.count_new_requets }} </span> </li>
  </a>
 
@@ -13,7 +13,7 @@
      Reclamation approveé <span class="badge badge-primary badge-pill"> {{ user.profile.count_approved_requets }} </span></li>
  </a>
 
-   <a href="{% url 'manager_fixed_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+   <a href="{% url 'manager_fixed_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
      Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
    </a>
 
@@ -70,20 +70,14 @@
             <span class="mr-1">{{ requet.client }}</span> <i class="fas fa-user"></i>
           </div>
           {% endif %}
+          
+          <div class="col-3 text-center">
+              {{ requet.pub_date|date:"d M Y H:m "}}
+          </div>
 
-        <div class="col-3 text-center">
-          <form  action="{% url 'edit_requet' requet.id %}" method="get">
-            {% csrf_token %}
-              <button type="submit" class="btn btn-outline-secondary btn-sm" ><i class="fas fa-edit"></i></button>
-          </form>
-        </div>
-
-        <div class="col-3 text-center">
-          <form  action="{% url 'aprove_requet' requet.id %}" method="post">
-            {% csrf_token %}
-              <button type="submit" class="btn btn-outline-success btn-sm" ><i class="fas fa-check"></i></button>
-          </form>
-        </div>
+          <div class="col-3 text-center">
+              {{ requet.aprove_date|date:"d M Y H:m "}}
+          </div>
 
         <div class="col-3 text-center">
           <form  action="{% url 'manager_delete_requet' requet.id %}" method="get">

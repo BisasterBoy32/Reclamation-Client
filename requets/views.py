@@ -53,7 +53,7 @@ class TechRequetListView(LoginRequiredMixin , UserPassesTestMixin ,ListView):
     template_name = "requets/tech_list.html"
 
     def get_queryset(self):
-        return Requet.objects.filter(tech = self.request.user).order_by("client__profile__type","-pub_date")
+        return Requet.objects.filter(tech = self.request.user ).exclude(state = "Problème Résolu").order_by("client__profile__type","-pub_date")
 
     def test_func(self):
         return self.request.user.profile.group == "tech"

@@ -6,7 +6,9 @@
 <div class="border p-3 m-4 header-siuvi radius">
 
 <form  action="{% url 'edit_requet' requet.id %}"  method="post">
-
+  <div class=" m-2">
+    date de création : {{ requet.pub_date|date:"d M Y H:m " }}
+  </div>
   {% csrf_token %}
   {{ form|crispy  }}
   <button type="submit" class="btn btn-primary btn-sm"> Modifier </button>

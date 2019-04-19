@@ -1,0 +1,20 @@
+{% extends "manager/base3.html" %}
+
+{% block content %}
+
+<div class="border p-3 m-4 header-siuvi radius">
+
+    <div class="alert alert-danger ">
+      <h4>  êtes-vous sûr de vouloir supprimer le technicien {{ tech.username }}?</h4>
+    </div>
+
+
+<form  action="{% url 'delete_tech' tech.id %}"  method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-outline-danger btn-sm"> Suprimer </button>
+  <a href="{% url 'list_tech' %}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+
+</form>
+</div>
+
+{% endblock %}

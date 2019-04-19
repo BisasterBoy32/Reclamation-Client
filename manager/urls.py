@@ -8,4 +8,11 @@ urlpatterns = [
     path("aprove_requet/<int:id>/",views.aprove,name="aprove_requet"),
     path("delete_requet/<int:pk>/",views.RequetDeleteView.as_view(),name="manager_delete_requet"),
     path("edit_requet/<int:id>/",views.edit_requet,name="edit_requet"),
+    path("requets_approved/",views.RequetsApprovedListView.as_view(),name="manager_approved_requets"),
+    path("requets_fixed/",views.RequetsFixedListView.as_view(),name="manager_fixed_requets"),
+    path("register_employee/",views.register_employee,name="register_employee"),
+    path("register_admin/",views.register_admin,name="register_admin"),
+    path("list_tech/",views.TechListView.as_view(),name="list_tech"),
+    path("delete_tech/<int:pk>/",views.TechDeleteView.as_view(),name="delete_tech"),
+    path("tech_info/<int:id>/",views.tech_info,name="tech_info"),
 ]

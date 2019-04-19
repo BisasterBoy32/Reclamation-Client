@@ -1,0 +1,39 @@
+{% extends 'manager/base3.html' %}
+
+
+
+{% block list%}
+<ul class="list-group ">
+ <a href="{% url 'list_tech' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+ Tout Technicien <span class="badge badge-primary badge-pill"> {{ user.profile.count_tech }} </span> </li>
+</a>
+
+ <a href="{% url 'register_employee' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+   Ajouter un nouveau technicien </li>
+</a>
+
+ <a href="{% url 'register_admin' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
+    Ajouter un nouveau admin compte </li>
+ </a>
+
+</ul>
+{% endblock %}
+
+
+{% block content %}
+
+        <div class="change-info mt-4 p-4">
+
+          <form  action="{% url 'register_admin' %}" method="post">
+            {% csrf_token %}
+
+            <legend class="text-center border-bottom mb-4">Ajouter an nouveau admin compte</legend>
+
+            {{ u_form.as_p }}
+
+            <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">Ajouter </button>
+          </form>
+
+        </div>
+
+{% endblock %}

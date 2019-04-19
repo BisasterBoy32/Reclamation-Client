@@ -18,35 +18,47 @@
   <body>
 
     <!-- navbar -->
-    <nav class="navbar navbar-light navbar-expand-lg navbar-custom">
-      <div class="container">
-            <a class="navbar-brand" href="{% url 'manager_home' %}"><img class="icon-h" src="{% static 'img/algerieT.png' %}"> Algerie Telecom Administrateur </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav mr-auto">
-                  <!-- right side -->
-              </ul>
-              <ul class="navbar-nav navbar-right">
-                <li class="nav-item">
-                  <a href="{% url 'siuvi_requete' %}" class="nav-link">ajouter un nouvel administrateur compte</a>
-                </li>
-                <li class="nav-item">
-                  <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt fa-lg"></i></a>
-                </li>
-            </div>
-          </div>
-        </nav>
-
-        <form  id="logout" action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-          <input type="hidden" >
-        </form>
-
-
-
+    <div class="row ">
+      <nav class="navbar navbar-light navbar-expand-lg navbar-custom col-12">
         <div class="container">
+              <a class="navbar-brand" href="{% url 'manager_home' %}"><img class="icon-h" src="{% static 'img/algerieT.png' %}"> Algerie Telecom Administrateur </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <!-- right side -->
+                </ul>
+                <ul class="navbar-nav navbar-right">
+                  <li class="nav-item">
+                    <a href="{% url 'siuvi_requete' %}" class="nav-link">ajouter un nouvel administrateur compte</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt fa-lg"></i></a>
+                  </li>
+              </div>
+            </div>
+          </nav>
+    </div>
+
+    <form  id="logout" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+    </form>
+
+
+<div class="row container-fluid">
+
+      <div class="col-2">
+        <div class=" border mt-4 m-1 p-2 list-bar ">
+          <img src="{% static 'img/admin1.png' %}" class="mb-3 admin-icon">
+
+            {% block list%}
+            {% endblock %}
+
+          </div>
+      </div>
+
+        <div class="col-10">
 
           {% if messages %}
           {% for message in messages %}
@@ -62,24 +74,23 @@
             {% endfor %}
           {% endif %}
 
-
-          <div class="row ml-4 centered2">
+          <div class="row">
 
               <a class="a-simple" href="#">
                 <div class="col-3 mt-4">
                   <div class="m-3 p-3 client ">
                       <div class="centered1"> <i class="fas fa-user-tie fa-2x"></i>  </div>
-                      <h5 class="text-center mt-2">  Clients </h5>
+                      <h5 class="text-center mt-2">  Clients {{ user.profile.count_client }} </h5>
                       <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
                   </div>
                 </div>
               </a>
 
-              <a class="a-simple" href="#">
+              <a class="a-simple" href="{% url 'list_tech' %}">
                 <div class="col-3 mt-4">
                   <div class="m-3 p-3 client ">
                       <div class="centered1"> <i class="fas fa-users-cog fa-2x"></i>  </div>
-                      <h5 class="text-center mt-2"> Technician </h5>
+                      <h5 class="text-center mt-2"> Technician {{ user.profile.count_tech }} </h5>
                       <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
                   </div>
                 </div>
@@ -89,7 +100,7 @@
                 <div class="col-3 mt-4">
                   <div class="m-3 p-3 client ">
                       <div class="centered1"> <i class="fas fa-file-alt fa-2x"></i>  </div>
-                      <h5 class="text-center mt-2">  Recalamation </h5>
+                      <h5 class="text-center mt-2">  Recalamation {{ user.profile.count_requets }} </h5>
                       <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
                   </div>
                 </div>
@@ -104,13 +115,13 @@
                   </div>
                 </div>
               </a>
-
           </div>
 
           {% block content %}
           {% endblock %}
 
         </div>
+</div>
 
 
 

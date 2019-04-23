@@ -15,4 +15,9 @@ urlpatterns = [
     path("list_tech/",views.TechListView.as_view(),name="list_tech"),
     path("delete_tech/<int:pk>/",views.TechDeleteView.as_view(),name="delete_tech"),
     path("tech_info/<int:id>/",views.tech_info,name="tech_info"),
+    path("client_info/<int:id>/",views.client_info,name="manager_client_info"),
+    path("requet_info/<int:id>/",views.requet_info,name="manager_requet_info"),
+    path("list_personne/",views.PersonneListView.as_view(),name="list_personne"),
+    path("delete_personne/<int:pk>/",views.PersonneDeleteView.as_view(),name="delete_personne"),
+    path("list_enterprise/",views.enterprise_list,name="list_enterprise"),
 ]

@@ -1,0 +1,33 @@
+{% extends 'requets/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="row choose-board">
+  <div class="col-6">
+    <a class="a-simple" href="{% url 'create_requete_internet' %}">
+          <div class="boreder text-center p-3 mt-4 choose">
+            <div class="mb-4 text-center text-choose">    <strong> Problem D'internet </strong>  </div>
+            <div class=""> <i class="fas fa-wifi fa-10x"></i>  </div>
+
+          </div>
+      </a>
+  </div>
+
+
+  <div class="col-6">
+    <a class="a-simple" href="{% url 'create_requete_telephonique' %}">
+      <div class="boreder p-3 mt-4 choose">
+        <div class="centered2">
+          <div class=" mb-4 text-center text-choose"><strong>Problem De Telephone Fix </strong><br>  </div>
+          <div class=""> <i class="fas fa-phone-slash fa-10x"></i>    </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+    </div>
+
+
+
+
+
+{% endblock %}

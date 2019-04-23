@@ -31,9 +31,6 @@
                 </ul>
                 <ul class="navbar-nav navbar-right">
                   <li class="nav-item">
-                    <a href="{% url 'siuvi_requete' %}" class="nav-link">ajouter un nouvel administrateur compte</a>
-                  </li>
-                  <li class="nav-item">
                     <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt fa-lg"></i></a>
                   </li>
               </div>
@@ -74,9 +71,9 @@
             {% endfor %}
           {% endif %}
 
-          <div class="row">
+          <div class="row nav2-base3">
 
-              <a class="a-simple" href="#">
+              <a class="a-simple" href="{% url 'list_personne' %}">
                 <div class="col-3 mt-4">
                   <div class="m-3 p-3 client ">
                       <div class="centered1"> <i class="fas fa-user-tie fa-2x"></i>  </div>

@@ -1,5 +1,6 @@
 from django import forms
 from requets.models import Requet
+from users.models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
@@ -21,7 +22,7 @@ class  EditRequetForm(forms.ModelForm):
 
         labels = {
         "content" : "modifier le contenu pour être plus clair",
-        "tech" : "la capacité de passer au technicien efficace"
+        "tech" : "la possibilité de passer au technicien efficace"
 
         }
 
@@ -31,16 +32,20 @@ class AddAdminForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ["username","email","password1","password2"]
+        fields = ["first_name","last_name","username","email","password1","password2"]
 
         widgets = {
         "username" : forms.TextInput(attrs={ "class":"form-control username" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Nom d'utilisateur"}),
         "email" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Email Adress de l'employer"}),
+        "first_name" : forms.TextInput(attrs={ "class":"form-control username" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Nom"}),
+        "last_name" : forms.TextInput(attrs={ "class":"form-control username" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Prenom"}),
         }
 
         labels = {
             "username" : "",
             "email" : "",
+            "first_name" : "",
+            "last_name" : "",
         }
 
         help_texts = {
@@ -98,3 +103,36 @@ class AddAdminForm(UserCreationForm):
         self.fields['password2'].widget = forms.PasswordInput(attrs={"class":"form-control password" ,"id":"exampleInputPassword1" ,"placeholder":"Retaper Le mot de passe"})
         self.fields['password1'].label = ""
         self.fields['password2'].label = ""
+
+class ProfileAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ["location","phone_number"]
+
+        widgets = {
+        "location" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Commune /Rue /N° de Logement"}),
+        "phone_number" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"numéro telephone"}),
+        }
+        labels = {
+                "location" : "",
+                "phone_number" : "",
+        }
+
+# <----------------------------- tech edit form ---------------------------------------------->
+class UserChangeInfoForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ["email","first_name","last_name"]
+        widgets = {
+        "email" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Email Adress"}),
+        "first_name" : forms.TextInput(attrs={ "class":"form-control username" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Nom"}),
+        "last_name" : forms.TextInput(attrs={ "class":"form-control username" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Prenom"}),
+        }
+
+        labels = {
+                "email" : "Email adresse",
+                "first_name" : "Nom",
+                "last_name" : "Prenom",
+        }

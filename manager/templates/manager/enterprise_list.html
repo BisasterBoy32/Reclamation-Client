@@ -1,0 +1,88 @@
+{% extends "manager/base3.html" %}
+
+{% load staticfiles %}
+{% block list%}
+
+
+  <ul class="list-group ">
+   <a href="{% url 'list_personne' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     les client individual <span class="badge badge-primary badge-pill"> {{ user.profile.count_personne }} </span> </li>
+ </a>
+
+   <a href="{% url 'list_enterprise' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
+     les entreprises <span class="badge badge-primary badge-pill"> {{ user.profile.count_entreprise }} </span></li>
+ </a>
+  </ul>
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<div class="border  p-1 mt-3 radius ">
+
+<div class="header-siuvi p-3 m-1 radius " >
+  <div class="row mb-3 border-bottom pb-2 ">
+    <div class="col-4">
+      <div class="row">
+        <div class="col-lg-6 col-6 text-center">
+          Nom d'utilusateur
+        </div>
+
+        <div class="col-lg-6 col-6 text-center">
+          Nom d'entreprise
+        </div>
+      </div>
+    </div>
+
+    <div class="col-8">
+      <div class="row">
+        <div class="col-9 text-center">
+          Email adress
+        </div>
+        <div class="col-3 text-center">
+          Suprimer
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% for client in clients.all %}
+    <div class="row mt-3 border-bottom pb-2 ">
+      <div class="col-4">
+        <div class="row">
+          <div class="col-6 text-center">
+          <a class="a-hovered" href="#"></a> <a class="a-hovered" href="{% url 'manager_client_info' client.id %}"> {{ client.username }}</a>
+          </div>
+
+          <div class="col-6 text-center">
+            {{ client.profile.company.name }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-8 ">
+        <div class="row">
+        <div class="col-9 text-center">
+          <span class="mr-1">{{ client.email }}
+      </div>
+
+        <div class="col-3 text-center">
+          <form  action="{% url 'delete_personne' client.id %}" method="get">
+            {% csrf_token %}
+              <button type="submit" class="btn btn-outline-danger btn-sm" ><i class="fas fa-backspace"></i></button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

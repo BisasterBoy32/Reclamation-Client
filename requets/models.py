@@ -7,11 +7,13 @@ from django.db.models import Count
 class Requet(models.Model):
 
     client = models.ForeignKey(User , on_delete = models.CASCADE , related_name = "requets")
+    problem = models.CharField(max_length = 256 , null = True)
     content = models.TextField()
     state = models.CharField(max_length = 100 , default="ont étape de traitement")
     tech = models.ForeignKey(User , on_delete = models.CASCADE , null = True , related_name = "works")
     pub_date = models.DateTimeField(default = timezone.now())
     aprove_date = models.DateTimeField(null = True)
+    fix_date = models.DateTimeField(null = True)
 
     def __str__(self):
         if len(self.content) > 100 :
@@ -34,4 +36,11 @@ class Requet(models.Model):
 
     def requet_fixed(self):
         self.state = "Problème Résolu"
+        self.fix_date = timezone.now()
         self.save()
+
+    def repair_time(self):
+        time = self.fix_date - self.pub_date
+        hours = time.seconds // 3600
+        minute = (time.seconds % 3600) // 60
+        return str(time.days) + "days ," + str(hours) + "Hour ," + str(minute) + "minutes"

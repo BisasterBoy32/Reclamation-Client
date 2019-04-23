@@ -9,9 +9,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 from requets.models import Requet
 from django.contrib.auth.models import User
 from users.models import Profile
-from .forms import AddAdminForm
+from .forms import AddAdminForm ,UserChangeInfoForm ,ProfileAdminForm
 from .forms import EditRequetForm
 from django.db.models import Q
+from django.utils import timezone
 
 
 
@@ -31,12 +32,13 @@ def login_manager(request):
             auth.login(request,user)
             messages.success(request,f"welcome {username}")
             return redirect("manager_home")
-        elif user.profile.type != "admin":
-            error = f"{username} n'est pas un administrateur, seul l'administrateur peut accéder à cette page"
-            return render(request,"manager/login_manager.html",{"error":error})
-        else :
+        elif user == None :
             error = " nom d'utilisateur ou mot de passe n'est pas correcte"
             return render(request,"manager/login_manager.html",{"error":error})
+        else :
+            error = f"{username} n'est pas un administrateur, seul l'administrateur peut accéder à cette page"
+            return render(request,"manager/login_manager.html",{"error":error})
+
 
     return render(request,"manager/login_manager.html")
 
@@ -46,11 +48,11 @@ def login_manager(request):
 class RequetsListView( LoginRequiredMixin , UserPassesTestMixin ,ListView):
     model = Requet
     template_name = "manager/requet_list.html"
-    ordering = ["-pub_date"]
+    ordering = ["pub_date"]
     context_object_name = "requets"
 
     def get_queryset(self):
-        return Requet.objects.filter(state = "ont étape de traitement").order_by("-pub_date")
+        return Requet.objects.filter(state = "ont étape de traitement").order_by("pub_date")
 
     def test_func(self):
         return self.request.user.profile.group == "admin"
@@ -75,11 +77,11 @@ class RequetsApprovedListView( LoginRequiredMixin , UserPassesTestMixin ,ListVie
 class RequetsFixedListView( LoginRequiredMixin , UserPassesTestMixin ,ListView):
     model = Requet
     template_name = "manager/reclamation_fixée.html"
-    ordering = ["-pub_date"]
+    ordering = ["-fix_date"]
     context_object_name = "requets"
 
     def get_queryset(self):
-        return Requet.objects.filter(state = "Problème Résolu").order_by("-pub_date")
+        return Requet.objects.filter(state = "Problème Résolu").order_by("-fix_date")
 
     def test_func(self):
         return self.request.user.profile.group == "admin"
@@ -117,6 +119,10 @@ def edit_requet(request ,id ):
             form =  EditRequetForm(request.POST ,instance = requet)
             if form.is_valid():
                 form.save()
+                if requet.state == "ont étape de traitement" :
+                    requet.state = "apprové par l'administrateur"
+                    requet.aprove_date = timezone.now()
+                    requet.save()
                 messages.success(request,f"{client} Reclamation est modifie avec success")
                 return redirect("manager_requets")
 
@@ -138,27 +144,42 @@ def aprove(request ,id):
     else :
         return HttpResponse("<h1>403 Forbidden </h1>")
 
+#requet fixed informations
+@login_required
+def requet_info(request ,id):
+    requet = get_object_or_404(Requet , pk = id)
+
+    if  request.user.profile.group == "admin" :
+        return render(request,"manager/requet_information.html",{"requet":requet})
+
+    else :
+        return HttpResponse("<h1>403 Forbidden </h1>")
+
 # <--------------------------- tech part ----------------------------------------------->
-# register
+# register tech
 @login_required
 def register_employee(request):
     if request.user.profile.group == "admin" :
         if request.method == 'POST':
             u_form = AddAdminForm(request.POST)
+            p_form = ProfileAdminForm(request.POST)
 
-            if u_form.is_valid() :
+            if u_form.is_valid() and p_form.is_valid() :
                 user = u_form.save()
                 user.set_password(user.password)
                 username = user.username
-                u_profile = Profile.objects.create(owner = user ,group = "tech")
+                u_profile = p_form.save(commit = False)
+                u_profile.owner = user
+                u_profile.group = "tech"
                 u_profile.save()
                 messages.success(request,f"le technicien {username} est creé avec success")
                 return redirect("list_tech")
 
         else :
             u_form = AddAdminForm()
+            p_form = ProfileAdminForm()
 
-        return render(request,"manager/register_employee.html" ,{"u_form":u_form})
+        return render(request,"manager/register_employee.html" ,{"u_form":u_form ,"p_form":p_form})
     else :
         return HttpResponse("<h1>403 Forbidden</h1>")
 
@@ -218,26 +239,76 @@ class TechDeleteView(LoginRequiredMixin , UserPassesTestMixin ,DeleteView ):
 #edit tech
 @login_required
 def tech_info(request ,id):
+    tech = get_object_or_404(User , pk = id)
     if tech.profile.group == "tech" :
 
-        tech = get_object_or_404(User , pk = id)
-        u_form = AddAdminForm(instance = tech)
+        u_form = UserChangeInfoForm(instance = tech)
+        p_form = ProfileAdminForm(instance = tech.profile)
 
         if request.method == 'POST'  :
-            u_form = AddAdminForm( request.POST ,instance = request.user )
+            u_form = UserChangeInfoForm( request.POST ,instance = tech )
+            p_form = ProfileAdminForm(request.POST ,instance = tech.profile)
 
-            if u_form.is_valid() :
+            if u_form.is_valid() and p_form.is_valid() :
                 email1 = u_form.cleaned_data["email"]
-                if User.objects.filter(email = email1).exclude(username = request.user.username).exists():
+                if User.objects.filter(email = email1).exclude(username = tech.username).exists():
                     error1 = "l'adresse e-mail que vous avez entrée est déjà enregistrée,"
-                    return render(request,"users/tech_info.html",{"u_form":u_form,"error1":error1})
+                    return render(request,"manager/tech_info.html",{"u_form":u_form,"p_form":p_form,"error1":error1,"tech":tech})
                 else :
                     u_form.save()
+                    p_form.save()
                     username = tech.username
                     messages.success(request,f"Les informations de {username} ont été modifiées avec succès")
-                    return redirect("tech_info")
+                    return redirect("tech_info" ,id = tech.id)
 
-        return render(request,"manage/tech_info.html",{"u_form":u_form},{"tech":tech})
+        return render(request,"manager/tech_info.html",{"u_form":u_form ,"p_form":p_form,"tech":tech})
 
     else :
         return HttpResponse("<h1> 403 Forbidden </h1>")
+
+
+# <-------------------------------------- client part --------------------------------------->
+def client_info(request , id):
+    if request.user.profile.group == "admin":
+        client = get_object_or_404(User , pk = id)
+        return render(request,"manager/client_info.html",{"client" : client})
+    else :
+        return HttpResponse("<h1> 403 Forbidden </h1>")
+
+class PersonneListView(LoginRequiredMixin , UserPassesTestMixin ,ListView):
+    model = User
+    template_name = "manager/personne_list.html"
+    context_object_name = "clients"
+
+    def get_queryset(self):
+        return User.objects.filter(profile__type = "personne")
+
+    def test_func(self):
+        return self.request.user.profile.group == "admin"
+
+#list des entreprises
+def enterprise_list(request):
+    if request.user.profile.group == "admin":
+        clients = User.objects.filter(profile__type = "entreprise")
+        return render(request,"manager/enterprise_list.html",{"clients":clients})
+    else :
+        return HttpResponse("<h1>403 Forbidden</h1>")
+
+
+
+#delete client
+class PersonneDeleteView(LoginRequiredMixin , UserPassesTestMixin ,DeleteView):
+    model = User
+    template_name = "manager/delete_personne.html"
+
+    def get_context_data(self,**kwargs):
+        data = super().get_context_data(**kwargs)
+        client = self.get_object()
+        data['client'] = client
+        return data
+
+    def test_func(self):
+        return self.request.user.profile.group == "admin"
+
+    def get_success_url(self):
+        return reverse("list_personne")

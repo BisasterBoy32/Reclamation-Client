@@ -1,0 +1,42 @@
+{% extends 'requets/base.html' %}
+
+{% block content %}
+
+<div class="container border  p-1 m-3 radius">
+
+<div class="header-siuvi p-3 m-1 radius" >
+  <div class="row mb-3 border-bottom pb-2 ">
+    <div class="col-md-8 col-6">
+      Votre Requets
+    </div>
+    <div class="col-md-2 col-4">
+      Date de réform
+    </div>
+    <div class="col-md-2 col-2">
+      Suprimer Requet
+    </div>
+  </div>
+
+
+  {% for requet in requets %}
+    <div class="row mt-3 border-bottom pb-2 ">
+      <div class="col-md-8 col-6">
+        {{ requet.content }}
+      </div>
+      <div class="col-md-2 col-4">
+        {{ requet.fix_date|date:"d M Y, H:m " }}
+      </div>
+      <div class="col-md-2 col-2">
+        <form  action="{% url 'delete_requete' requet.id %}" method="get">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm" ><i class="fas fa-backspace"></i></button>
+        </form>
+      </div>
+    </div>
+
+  {% endfor %}
+  </div>
+</div>
+
+
+{% endblock %}

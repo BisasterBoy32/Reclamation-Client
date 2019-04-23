@@ -1,0 +1,72 @@
+{% extends "manager/base3.html" %}
+
+{% load staticfiles %}
+{% block list%}
+
+
+  <ul class="list-group ">
+   <a href="{% url 'manager_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Noveau Reclamation <span class="badge badge-primary badge-pill"> {{ user.profile.count_new_requets }} </span> </li>
+ </a>
+
+   <a href="{% url 'manager_approved_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Reclamation approveé <span class="badge badge-primary badge-pill"> {{ user.profile.count_approved_requets }} </span></li>
+ </a>
+
+   <a href="{% url 'manager_fixed_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
+     Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
+   </a>
+
+  </ul>
+
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<div class="container mt-4">
+  <div class="border  p-3 radius content">
+    <div class="border-bottom pb-1 mb-3">
+      <div class="text-center head">
+        Reclamation
+      </div>
+      {{ requet.content }}
+
+    </div>
+
+      <div class="text-center content-text mb-2">
+        Crea par l'utulisateur {{ requet.client.username }} à :
+              {{ requet.pub_date|date:"d M Y, H:m " }}
+      </div>
+
+      <div class="text-center content-text mb-2">
+        Approveé par l'administrateur à :
+      {{ requet.aprove_date|date:"d M Y, H:m " }}
+      </div>
+
+
+      <div class="text-center content-text mb-2">
+        Le Prblem Resolu à :
+      {{ requet.fix_date|date:"d M Y, H:m " }}
+      </div>
+
+      <div class="text-center content-text mb-2">
+        Durée pour résoudre le problème par le technicien   {{ requet.tech}} :
+        {% if requet.fix_date %}
+          {{ requet.repair_time }}
+        {% endif %}
+      </div>
+  </div>
+
+
+
+
+
+
+
+
+</div>
+
+{% endblock %}

@@ -33,10 +33,13 @@
               </ul>
               <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
-                  <a href="{% url 'siuvi_requete' %}" class="nav-link">Siuvi votre Requetes</a>
+                  <a href="{% url 'create_requete' %}" class="nav-link">Cree Un Reclamation</a>
                 </li>
                 <li class="nav-item">
-                  <a href="{% url 'create_requete' %}" class="nav-link">Cree un Requet</a>
+                  <a href="{% url 'siuvi_requete' %}" class="nav-link">Siuvi Votre Reclamation</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'requet_fixée' %}" class="nav-link">Les Reclamation Fixeé</a>
                 </li>
                 {% if user.profile.type == "personne" %}
                 <li class="nav-item">

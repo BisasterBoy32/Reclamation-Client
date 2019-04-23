@@ -23,15 +23,23 @@
 {% block content %}
 
         <div class="change-info mt-4 p-4">
-
-          <form  action="{% url 'register_employee' %}" method="post">
+          {% if error1 %}
+          <div class="alert alert-danger">
+            {{ error1 }}
+          </div>
+          {% endif %}
+          <form  action="{% url 'tech_info' tech.id %}" method="post">
             {% csrf_token %}
 
             <legend class="text-center border-bottom mb-4">les informations de {{ tech.username }} technicien</legend>
 
             {{ u_form.as_p }}
+            {{ p_form.as_p }}
 
-            <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">Ajouter </button>
+            <div class="inscrire">
+              <button class="btn btn-primary  btn-sm " type="submit" name="button">Changer </button>
+              <a href="{% url 'list_tech'  %}"><button class="btn btn-secondary btn-sm ml-2" type="button">Cancel</button></a>
+            </div>
           </form>
 
         </div>

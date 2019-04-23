@@ -1,14 +1,59 @@
 {% extends "manager/base3.html" %}
 
+{% block list%}
+{% if requet.aprove_date %}
+
+  <ul class="list-group ">
+   <a href="{% url 'manager_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Noveau Reclamation <span class="badge badge-primary badge-pill"> {{ user.profile.count_new_requets }} </span> </li>
+ </a>
+
+   <a href="{% url 'manager_approved_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
+     Reclamation approveé <span class="badge badge-primary badge-pill"> {{ user.profile.count_approved_requets }} </span></li>
+ </a>
+
+   <a href="{% url 'manager_fixed_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
+   </a>
+
+  </ul>
+
+{% else %}
+
+  <ul class="list-group ">
+   <a href="{% url 'manager_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
+     Noveau Reclamation <span class="badge badge-primary badge-pill"> {{ user.profile.count_new_requets }} </span> </li>
+ </a>
+
+   <a href="{% url 'manager_approved_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Reclamation approveé <span class="badge badge-primary badge-pill"> {{ user.profile.count_approved_requets }} </span></li>
+ </a>
+
+   <a href="{% url 'manager_fixed_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
+   </a>
+
+  </ul>
+{% endif %}
+{% endblock %}
+
+
+
 {% block content %}
 {% load crispy_forms_tags %}
 
 <div class="border p-3 m-4 header-siuvi radius">
 
 <form  action="{% url 'edit_requet' requet.id %}"  method="post">
-  <div class=" m-2">
-    date de création : {{ requet.pub_date|date:"d M Y H:m " }}
+  <div class="border-bottom mt-2 pb-2">
+  Date De Reclamation : {{ requet.pub_date|date:"d M Y, H:m " }}
   </div>
+  {% if requet.aprove_date %}
+  <div class="border-bottom mt-2 pb-2">
+  Date De Approvarion : {{ requet.aprove_date|date:"d M Y, H:m " }}
+  </div>
+  {% endif %}
+
   {% csrf_token %}
   {{ form|crispy  }}
   <button type="submit" class="btn btn-primary btn-sm"> Modifier </button>

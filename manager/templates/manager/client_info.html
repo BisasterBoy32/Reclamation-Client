@@ -1,0 +1,120 @@
+
+{% extends "manager/base3.html" %}
+
+{% load staticfiles %}
+{% block list%}
+
+{% endblock %}
+
+{% block content %}
+
+{% if client.profile.type == "personne"%}
+
+<div class="border mt-4 radius centered ">
+
+  <div class="header-siuvi p-3 m-1 radius" >
+    <div class="text-center">
+        <h2> {{ client.username }} informations </h2>
+      </div>
+
+    </div>
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Nom
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.personne.first_name }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Prenom
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.personne.last_name }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Email address
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.email }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Location
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.location }}
+      </div>
+    </div>
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Telephone FIx
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.phone_number }}
+      </div>
+    </div>
+
+  </div>
+{% elif client.profile.type == "entreprise"%}
+
+
+<div class="border mt-4 radius centered ">
+
+  <div class="header-siuvi p-3 m-1 radius" >
+    <div class="text-center">
+        <h2> L'entreprise {{ client.username }}  informations </h2>
+      </div>
+
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Name
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.company.name }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Email address
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.email }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Location
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.location }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+        Telephone FIx
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.phone_number }}
+      </div>
+    </div>
+
+  </div>
+
+
+{% endif %}
+
+
+{% endblock %}

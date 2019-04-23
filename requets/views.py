@@ -3,17 +3,36 @@ from django.urls import reverse
 from django.views.generic import CreateView , DeleteView , ListView
 from .models import Requet
 from django.contrib import messages
-from .forms import RequetForm
+from .forms import RequetForm ,InternetRequetForm
 from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 
 # Create your views here.
 def home(request):
     return render(request,"requets/home.html")
 
+def choose_problem(request):
+    return render(request ,"requets/choose.html")
 
+#problem telephone fix
 class RequetCreateView(CreateView):
     model = Requet
     form_class = RequetForm
+
+    def form_valid(self , form):
+        form.instance.client = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        username = self.request.user.username
+        messages.success(self.request,f"{username} Votre Réclamation Créée Avec Succès")
+        return reverse("create_requete")
+
+#problem d'internet
+class RequetInternetCreateView(CreateView):
+    model = Requet
+    template_name = "requets/requet_internet.html"
+    form_class = InternetRequetForm
+
 
     def form_valid(self , form):
         form.instance.client = self.request.user
@@ -30,9 +49,17 @@ class RequetListView(ListView):
     context_object_name = "requets"
 
     def get_queryset(self):
-        requets = Requet.objects.filter(client = self.request.user).order_by("-pub_date")
+        requets = Requet.objects.filter(client = self.request.user).exclude(state = "Problème Résolu").order_by("-pub_date")
         return requets
 
+class FixRequetListView(ListView):
+    model = Requet
+    context_object_name = "requets"
+    template_name = "requets/requet_fixée.html"
+
+    def get_queryset(self):
+        requets = Requet.objects.filter(state = "Problème Résolu" ,client = self.request.user).order_by("-fix_date")
+        return requets
 
 class RequetDeleteView(LoginRequiredMixin , UserPassesTestMixin ,DeleteView):
     model = Requet

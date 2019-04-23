@@ -34,7 +34,7 @@
                 <form action="{% url 'login_tech' %}" method="POST">
                   {% csrf_token %}
 
-                  <legend class="text-center border-bottom mb-4"> Login </legend>
+                  <legend class="text-center border-bottom mb-4"> Login Technicien </legend>
                    {% if error %}
                      <div class="alert alert-danger">
                         {{ error }}

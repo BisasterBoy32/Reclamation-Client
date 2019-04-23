@@ -17,12 +17,6 @@ body{
   border-radius: 6px;
   background-color:   #ffcccc;
 }
-ul{
-  /* margin-top: -30px; */
-  /* list-style-type: none; */
-  /* margin-left: -20px;
-  font-size: 14px; */
-}
 
 
 #AT{
@@ -115,6 +109,46 @@ ul{
 .admin-icon{
   width:220px;
 }
+.nav2-base3{
+  margin-left: 100px;
+}
+.content{
+  background-color: #36d1c4;
+  color : #000000;
+}
+.head{
+  font-size: 26px;
+}
+.content-text{
+  font-size: 19px;
+}
+.a-hovered{
+    color : #000000;
+    text-decoration: none;
+}
+.a-hovered:hover{
+  text-decoration: none;
+  color : #5ca0d3;
+  font-size: 18px;
+}
+.choose{
+  border-radius: 5px;
+  border : 3px solid #c82121;
+  background-color: #444444;
+  width : 300px;
+  height: 300px;
+  font-size: 18px;
+  color : #ffffff;
+}
+
+.choose:hover{
+  border : 3px solid #444444;
+  background-color:#ffffff;
+  color :  #d34848;
+}
+.choose-board{
+  margin-top: 100px;
+}
 /* ------------------------------- fc6b3f    nav bar styling ---------------------------------------------------*/
 
 
@@ -137,11 +171,13 @@ ul{
 }
 nav {
     font-family: 'Libre Baskerville', serif;
+    font-size: 14px;
 }
 .register-icon{
   width : 30%;
   margin: auto;
 }
+
 
 
 /* ------------------------ whene we have a small or ohone screen -------------------------------------- */

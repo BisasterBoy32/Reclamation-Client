@@ -29,8 +29,16 @@
 
 <div class="header-siuvi p-3 m-1 radius " >
   <div class="row mb-3 border-bottom pb-2 ">
-    <div class="col-6 text-center">
-      Reclamation
+    <div class="col-6">
+      <div class="row">
+        <div class="col-lg-1 col-2 text-center">
+          N°:
+        </div>
+
+        <div class="col-lg-11 col-10 text-center">
+          Reclamation
+        </div>
+      </div>
     </div>
 
     <div class="col-6">
@@ -39,10 +47,10 @@
           Client
         </div>
         <div class="col-3 text-center">
-          Date de creation
+          Technicien
         </div>
         <div class="col-3 text-center">
-          Date de approvation
+          Montrer / Modifier
         </div>
         <div class="col-3 text-center">
           Suprimer
@@ -55,27 +63,38 @@
   {% for requet in requets %}
     <div class="row mt-3 border-bottom pb-2 ">
       <div class="col-6">
-        {{ requet.content }}
+        <div class="row">
+          <div class="col-1 text-center">
+            {{ requet.id }}
+          </div>
+
+          <div class="col-11">
+            {{ requet.content }}
+          </div>
+        </div>
       </div>
 
       <div class="col-6 ">
         <div class="row">
           {% if requet.client.profile.type == "entreprise" %}
           <div class="col-3 text-center">
-            <span class="mr-1 ">{{ requet.client }}</span> <i class="fas fa-building"></i>
+            <span class="mr-1 "><a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}">{{ requet.client }}</a></span> <i class="fas fa-building"></i>
           </div>
           {% elif requet.client.profile.type == "personne" %}
           <div class="col-3 text-center">
-            <span class="mr-1">{{ requet.client }}</span> <i class="fas fa-user"></i>
+            <span class="mr-1"><a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}">{{ requet.client }}</a></span> <i class="fas fa-user"></i>
           </div>
           {% endif %}
 
         <div class="col-3 text-center">
-            {{ requet.pub_date|date:"d M Y H:m "}}
+            <a class="a-hovered" href="{% url 'tech_info' requet.tech.id %}"> {{ requet.tech }}</a>
         </div>
 
         <div class="col-3 text-center">
-            {{ requet.aprove_date|date:"d M Y H:m "}}
+          <form  action="{% url 'edit_requet' requet.id %}" method="get">
+            {% csrf_token %}
+              <button type="submit" class="btn btn-outline-secondary btn-sm" ><i class="fas fa-edit"></i></button>
+          </form>
         </div>
 
         <div class="col-3 text-center">

@@ -8,7 +8,7 @@ from requets.models import Requet
 class Profile(models.Model):
     owner = models.OneToOneField(User ,on_delete = models.CASCADE)
     location = models.CharField(max_length = 100)
-    phone_number = models.IntegerField(null = True)
+    phone_number = models.CharField(max_length = 100,null = True)
     group = models.CharField(max_length = 100 , default = "client")
     type = models.CharField(max_length = 100 ,null = True)
 

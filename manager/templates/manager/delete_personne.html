@@ -1,0 +1,30 @@
+{% extends "manager/base3.html" %}
+
+{% block content %}
+
+<div class="border p-3 m-4 header-siuvi radius">
+
+    {% if client.profile.type == "personne" %}
+    <div class="alert alert-danger ">
+      <h4> êtes-vous sûr de vouloir supprimer  l'utilisateur {{ client.username }}?</h4>
+    </div>
+    {% elif client.profile.type == "entreprise" %}
+    <div class="alert alert-danger ">
+      <h4> êtes-vous sûr de vouloir supprimer l'entreprise {{ client.username }}?</h4>
+    </div>
+    {% endif %}
+
+
+<form  action="{% url 'delete_personne' client.id %}"  method="post">
+  {% csrf_token %}
+  {% if client.profile.type == "personne" %}
+  <button type="submit" class="btn btn-outline-danger btn-sm"> Suprimer </button>
+  <a href="{% url 'list_personne' %}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+  {% elif client.profile.type == "entreprise" %}
+  <a href="{% url 'list_personne' %}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+  {% endif %}
+
+</form>
+</div>
+
+{% endblock %}

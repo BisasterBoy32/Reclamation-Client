@@ -14,6 +14,11 @@
     <!-- Font Awsome  -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
+    <!-- Jquery scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.0.min.js"
+      integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+      crossorigin="anonymous"></script>
   </head>
   <body>
 
@@ -75,7 +80,7 @@
 
               <a class="a-simple" href="{% url 'list_personne' %}">
                 <div class="col-3 mt-4">
-                  <div class="m-3 p-3 client ">
+                  <div id="clients-nav" class="m-3 p-3 client ">
                       <div class="centered1"> <i class="fas fa-user-tie fa-2x"></i>  </div>
                       <h5 class="text-center mt-2">  Clients {{ user.profile.count_client }} </h5>
                       <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
@@ -85,7 +90,7 @@
 
               <a class="a-simple" href="{% url 'list_tech' %}">
                 <div class="col-3 mt-4">
-                  <div class="m-3 p-3 client ">
+                  <div id="techs-nav" class="m-3 p-3 client ">
                       <div class="centered1"> <i class="fas fa-users-cog fa-2x"></i>  </div>
                       <h5 class="text-center mt-2"> Technician {{ user.profile.count_tech }} </h5>
                       <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
@@ -95,7 +100,7 @@
 
               <a class="a-simple" href="{% url 'manager_requets' %}">
                 <div class="col-3 mt-4">
-                  <div class="m-3 p-3 client ">
+                  <div id="requtes-nav" class="m-3 p-3 client ">
                       <div class="centered1"> <i class="fas fa-file-alt fa-2x"></i>  </div>
                       <h5 class="text-center mt-2">  Recalamation {{ user.profile.count_requets }} </h5>
                       <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
@@ -105,7 +110,7 @@
 
               <a class="a-simple" href="#">
                 <div class="col-3 mt-4">
-                  <div class="m-3 p-3 client ">
+                  <div id="statistiques-nav" class="m-3 p-3 client ">
                       <div class="centered1"> <i class="fas fa-calculator fa-2x"></i>  </div>
                       <h5 class="text-center mt-2"> Statistiques </h5>
                       <div class="centered1"> <i class="fas fa-sort-down fa-3x"></i> </div>
@@ -121,9 +126,8 @@
 </div>
 
 
-
         <!-- Custom scripts -->
-        <script type="text/javascript">
+        <script src="{% static 'myscripts.js' %}" >
 
         </script>
 

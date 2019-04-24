@@ -17,12 +17,8 @@
 
 <form  action="{% url 'delete_personne' client.id %}"  method="post">
   {% csrf_token %}
-  {% if client.profile.type == "personne" %}
   <button type="submit" class="btn btn-outline-danger btn-sm"> Suprimer </button>
   <a href="{% url 'list_personne' %}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
-  {% elif client.profile.type == "entreprise" %}
-  <a href="{% url 'list_personne' %}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
-  {% endif %}
 
 </form>
 </div>

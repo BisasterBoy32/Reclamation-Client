@@ -48,11 +48,11 @@ def login_manager(request):
 class RequetsListView( LoginRequiredMixin , UserPassesTestMixin ,ListView):
     model = Requet
     template_name = "manager/requet_list.html"
-    ordering = ["pub_date"]
+    ordering = ["-pub_date"]
     context_object_name = "requets"
 
     def get_queryset(self):
-        return Requet.objects.filter(state = "ont étape de traitement").order_by("pub_date")
+        return Requet.objects.filter(state = "ont étape de traitement").order_by("client__profile__type","-pub_date")
 
     def test_func(self):
         return self.request.user.profile.group == "admin"
@@ -64,6 +64,7 @@ class RequetsApprovedListView( LoginRequiredMixin , UserPassesTestMixin ,ListVie
     template_name = "manager/reclamation_approveé.html"
     ordering = ["-pub_date"]
     context_object_name = "requets"
+    paginate_by = 4
 
     def get_queryset(self):
         return Requet.objects.filter(state = "apprové par l'administrateur").order_by("-pub_date")
@@ -79,6 +80,7 @@ class RequetsFixedListView( LoginRequiredMixin , UserPassesTestMixin ,ListView):
     template_name = "manager/reclamation_fixée.html"
     ordering = ["-fix_date"]
     context_object_name = "requets"
+    paginate_by = 2
 
     def get_queryset(self):
         return Requet.objects.filter(state = "Problème Résolu").order_by("-fix_date")

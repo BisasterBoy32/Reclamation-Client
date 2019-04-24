@@ -11,7 +11,7 @@ class Requet(models.Model):
     content = models.TextField()
     state = models.CharField(max_length = 100 , default="ont étape de traitement")
     tech = models.ForeignKey(User , on_delete = models.CASCADE , null = True , related_name = "works")
-    pub_date = models.DateTimeField(default = timezone.now())
+    pub_date = models.DateTimeField(default = timezone.now)
     aprove_date = models.DateTimeField(null = True)
     fix_date = models.DateTimeField(null = True)
 

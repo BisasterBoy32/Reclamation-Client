@@ -3,6 +3,8 @@
 {% block content %}
 
 <div class="container border p-4 m-4">
+    <p>Le problem est : {{ requet.problem }}</p>
+  Description de problem :
   <p> {{ requet.content }}</p><br>
 </div>
 
@@ -119,7 +121,7 @@
       {% csrf_token %}
       <button type="submit" class="btn btn-block btn-sm btn-outline-success inscrire mb-1"> Problème résolu</button>
     </form>
-    
+
   </div>
 
 

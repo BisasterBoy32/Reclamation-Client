@@ -149,6 +149,12 @@ body{
 .choose-board{
   margin-top: 100px;
 }
+.client-active{
+  background-color: #dd6b4d;
+  border : 4px solid #87e5da;
+  color: #ffffff;
+}
+
 /* ------------------------------- fc6b3f    nav bar styling ---------------------------------------------------*/
 
 

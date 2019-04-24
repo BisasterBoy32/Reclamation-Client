@@ -53,6 +53,9 @@
   Date De Approvarion : {{ requet.aprove_date|date:"d M Y, H:m " }}
   </div>
   {% endif %}
+  <div class="border-bottom mt-2 pb-2">
+  Le Problem : {{ requet.problem }}
+  </div>
 
   {% csrf_token %}
   {{ form|crispy  }}

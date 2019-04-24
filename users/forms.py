@@ -86,30 +86,25 @@ class ProfileForm(forms.ModelForm):
 
     class Meta :
 
-        TYPES = [
-                ( "personne" ,"UN PARTICULIER" ),
-                ( "entreprise" ,"UNE ENTREPRISE" )
-        ]
-
         model = Profile
-        fields = ["location","phone_number","type"]
+        fields = ["location","phone_number"]
         widgets = {
                     "location" : forms.TextInput(attrs={ "class":"form-control location" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Commune /Rue /N° de Logement"}),
                     "phone_number" : forms.TextInput(attrs={ "class":"form-control " ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre telephone fix"}),
-                    "type" : forms.Select(choices = TYPES ,attrs={ "class":"form-control " ,"id":"exampleFormControlSelect1" ,"aria-describedby":"emailHelp" ,"placeholder":"Location"}),
-        }
+                    }
+
         labels = {
             "location" : "",
             "phone_number" : "",
-            "type" : " Je sius :"
         }
+
         help_texts = {
         "location" : "Assurez-vous d'entrer le bon et l'endroit exact dans lequel vous vivez afin que nous puissions vous rejoindre facilement."
         }
+
     def clean(self):
         data = super().clean()
         phone = data["phone_number"]
-        print(phone)
         if phone[0] != '0' :
             raise forms.ValidationError("entrer votre numéro fix !!")
         elif len(phone) != 9 :

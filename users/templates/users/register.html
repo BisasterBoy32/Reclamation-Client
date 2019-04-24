@@ -8,11 +8,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom Css -->
     <link rel="stylesheet" href="{% static 'styling.css' %}">
+    <link rel="stylesheet" href="{% static 'radio_css.css' %}">
     <!-- fonts -->
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
 
     <!-- Font Awsome  -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- Jquery scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.0.min.js"
+      integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+      crossorigin="anonymous"></script>
+
   </head>
 
   <body class="mb-4">
@@ -79,6 +87,32 @@
                 {% csrf_token %}
 
                 <legend class="text-center border-bottom mb-4"> S'inscrire</legend>
+                <label > <strong> Je Sius : </strong></label>
+                <div class="cc-selector">
+                  <div class="row mb-3">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                      <input id="personne" type="radio" name="type" value="personne" required/>
+                      <label class="drinkcard-cc personne" for="personne"></label>
+                    </div>
+                    <div class="col-3">
+                      <input id="enterprise" type="radio" name="type" value="entreprise" />
+                      <label class="drinkcard-cc enterprise"for="enterprise"></label >
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                  </div>
+                </div>
+                <div id="info-entreprise" class="mb-3" >
+                  <input id="e_name" class="form-control" type="text" placeholder="Nom de Votre Entreprise" name="name" >
+                </div>
+
+                <div id="info-personne" class="mb-3">
+                  <input id="f_name" class="form-control mb-2" type="text" placeholder="Nom" name="first_name"  >
+                  <input id="l_name" class="form-control mb-3" type="text" placeholder="Prenom" name="last_name"  >
+                </div>
                 {{ u_form.as_p }}
                 {{ p_form.as_p }}
                 <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">S'inscrire</button>
@@ -87,14 +121,14 @@
         </div>
 
         </div>
-
-
-
-
     </div>
 
 
 
+    <!-- Custom scripts -->
+    <script src="{% static 'myscripts.js' %}" >
+
+    </script>
 
     <!-- bootstrap js -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

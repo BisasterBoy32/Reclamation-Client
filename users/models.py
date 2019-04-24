@@ -53,6 +53,12 @@ class Personne(models.Model):
     first_name = models.CharField(max_length = 256)
     last_name = models.CharField(max_length = 256 )
 
+    def __str__(self):
+        return self.first_name
+
 class Company(models.Model):
     profile = models.OneToOneField(Profile , on_delete = models.CASCADE )
     name = models.CharField(max_length = 256)
+
+    def __str__(self):
+        return self.name

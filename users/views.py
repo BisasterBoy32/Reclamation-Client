@@ -23,11 +23,26 @@ def register(request):
             user.set_password(user.password)
             u_profile = p_form.save(commit = False)
             u_profile.owner = user
+            u_type = request.POST["type"]
+            u_profile.type = u_type
             u_profile.save()
             if u_profile.type == "personne":
-                return redirect("register_personne" , id = u_profile.id )
+                first_name = request.POST["first_name"]
+                last_name = request.POST["last_name"]
+                personne = Personne.objects.create(first_name = first_name , last_name = last_name , profile = u_profile)
+                personne.save()
+
             elif u_profile.type == "entreprise":
-                return redirect("register_entreprise" , id = u_profile.id)
+                name = request.POST["name"]
+                entreprise = Company.objects.create(name = name , profile = u_profile)
+                entreprise.save()
+
+
+            username = user.username
+            new_user = auth.authenticate(request , username = u_form.cleaned_data["username"] , password = u_form.cleaned_data["password1"])
+            auth.login(request ,new_user)
+            messages.success(request,f"l'utilisateur {username} a été créé avec succès")
+            return redirect("home")
 
     else :
         u_form = UserForm()
@@ -35,47 +50,8 @@ def register(request):
 
     return render(request,"users/register.html" ,{"u_form":u_form ,"p_form":p_form})
 
-# <------------------ register as  a normal personne ----------------------------------------->
-
-def register_personne(request , id):
-
-    profile = get_object_or_404(Profile , pk = id)
-    if request.method == "POST":
-        first_name = request.POST["Nom"]
-        last_name = request.POST["Prénom"]
-
-        Personne.objects.create(first_name = first_name , last_name = last_name , profile = profile)
-        username = profile.owner.username
-        messages.success(request,f"l'utilisateur {username} a été créé avec succès")
-        auth.login(request , profile.owner)
-        return redirect("home")
-    else :
-        return render(request,"users/register_personne.html",{"c_profile" : profile})
-
-# <------------------ register as  a an entreprise ----------------------------------------->
-
-def register_entreprise(request , id):
-
-    profile = get_object_or_404(Profile , pk = id)
-    form = CompanyChangeForm()
-    if request.method == "POST":
-        form = CompanyChangeForm(request.POST)
-
-        if form.is_valid():
-            company = form.save(commit =False)
-            company.profile = profile
-            company.save()
-
-        username = profile.owner.username
-        messages.success(request,f"l'utilisateur {username} a été créé avec succès")
-        auth.login(request , profile.owner)
-        return redirect("home")
-    else :
-        return render(request,"users/register_entreprise.html",{"form":form ,"c_profile" : profile})
-
 
 # log in
-
 def login_view(request):
     u_form = UserForm()
     p_form = ProfileForm()

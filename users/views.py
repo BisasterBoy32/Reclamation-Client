@@ -1,8 +1,12 @@
 from django.shortcuts import render ,redirect , get_object_or_404
 from django.contrib.auth.models import User
-from .models import Profile ,Personne ,Company
+from .models import Profile ,Personne ,Company , Address
 from requets.models import Requet
-from .forms import UserForm , ProfileForm , UserChangeInfoForm ,ProfileChangeForm ,PersonneChangeForm ,CompanyChangeForm
+from .forms import( AddressPersonneChangeForm ,UserForm ,
+                    ProfileForm , UserChangeInfoForm ,
+                    ProfileChangeForm ,PersonneChangeForm ,
+                    CompanyChangeForm ,AddressCompanyChangeForm
+                )
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -31,11 +35,20 @@ def register(request):
                 last_name = request.POST["last_name"]
                 personne = Personne.objects.create(first_name = first_name , last_name = last_name , profile = u_profile)
                 personne.save()
+                address = Address.objects.create(
+                profile = u_profile ,region = request.POST["region"], commune = request.POST["commune"],
+                rue=request.POST["rue"] ,logement = request.POST["logement"]
+                )
+                address.save()
 
             elif u_profile.type == "entreprise":
                 name = request.POST["name"]
                 entreprise = Company.objects.create(name = name , profile = u_profile)
                 entreprise.save()
+                address = Address.objects.create(
+                profile = u_profile ,region = request.POST["e_region"], commune = request.POST["e_commune"], rue=request.POST["e_rue"]
+                )
+                address.save()
 
 
             username = user.username
@@ -78,26 +91,29 @@ def user_info(request):
     u_form = UserChangeInfoForm(instance = request.user )
     p_form = ProfileChangeForm(instance = request.user.profile )
     ps_form = PersonneChangeForm(instance = request.user.profile.personne )
+    a_form = AddressPersonneChangeForm(instance = request.user.profile.address)
 
     if request.method == 'POST':
         u_form = UserChangeInfoForm( request.POST ,instance = request.user )
         p_form = ProfileChangeForm( request.POST , instance = request.user.profile )
         ps_form = PersonneChangeForm( request.POST , instance = request.user.profile.personne )
+        a_form = AddressPersonneChangeForm(request.POST ,instance = request.user.profile.address)
 
-        if u_form.is_valid() and p_form.is_valid() and ps_form.is_valid():
+        if u_form.is_valid() and p_form.is_valid() and ps_form.is_valid() and a_form.is_valid():
             email1 = u_form.cleaned_data["email"]
             if User.objects.filter(email = email1).exclude(username = request.user.username).exists():
                 error1 = "l'adresse e-mail que vous avez entrée est déjà enregistrée,"
-                return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"ps_form":ps_form,"error1":error1})
+                return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"ps_form":ps_form,"a_form":a_form ,"error1":error1})
             else :
                 u_form.save()
                 p_form.save()
                 ps_form.save()
+                a_form.save()
                 username = request.user.username
                 messages.success(request,f"Les informations d'utilisateur {username} ont été modifiées avec succès")
                 return redirect("client_info")
 
-    return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"ps_form":ps_form})
+    return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"ps_form":ps_form,"a_form":a_form })
 
 # <------------------------------- company client information ----------------------------------------->
 
@@ -107,26 +123,29 @@ def entreprise_info(request):
     u_form = UserChangeInfoForm(instance = request.user )
     p_form = ProfileChangeForm(instance = request.user.profile )
     c_form = CompanyChangeForm(instance = request.user.profile.company )
+    a_form = AddressCompanyChangeForm(instance = request.user.profile.address)
 
     if request.method == 'POST':
         u_form = UserChangeInfoForm( request.POST ,instance = request.user )
         p_form = ProfileChangeForm( request.POST , instance = request.user.profile )
         c_form = CompanyChangeForm( request.POST , instance = request.user.profile.company )
+        a_form = AddressCompanyChangeForm(request.POST ,instance = request.user.profile.address)
 
-        if u_form.is_valid() and p_form.is_valid() and c_form.is_valid():
+        if u_form.is_valid() and p_form.is_valid() and c_form.is_valid() and a_form.is_valid():
             email1 = u_form.cleaned_data["email"]
             if User.objects.filter(email = email1).exclude(username = request.user.username).exists():
                 error1 = "l'adresse e-mail que vous avez entrée est déjà enregistrée,"
-                return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"c_form":c_form,"error1":error1})
+                return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form ,"c_form":c_form,"error1":error1,"a_form":a_form})
             else :
                 u_form.save()
                 p_form.save()
                 c_form.save()
+                a_form.save()
                 username = request.user.username
                 messages.success(request,f"Les informations d'utilisateur {username} ont été modifiées avec succès")
                 return redirect("entreprise_info")
 
-    return render(request,"users/client_info.html",{"u_form":u_form,"p_form":p_form,"c_form":c_form})
+    return render(request,"users/client_info.html",{"u_form":u_form ,"p_form":p_form,"c_form":c_form,"a_form":a_form})
 
 
 # logout

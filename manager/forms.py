@@ -1,6 +1,6 @@
 from django import forms
 from requets.models import Requet
-from users.models import Profile
+from users.models import Profile ,Address
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
@@ -108,15 +108,13 @@ class ProfileAdminForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ["location","phone_number"]
+        fields = ["phone_number"]
 
         widgets = {
-        "location" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Commune /Rue /N° de Logement"}),
-        "phone_number" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"numéro telephone"}),
+        "phone_number" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" }),
         }
         labels = {
-                "location" : "",
-                "phone_number" : "",
+                "phone_number" : "numéro telephone :",
         }
 
 # <----------------------------- tech edit form ---------------------------------------------->
@@ -135,4 +133,27 @@ class UserChangeInfoForm(forms.ModelForm):
                 "email" : "Email adresse",
                 "first_name" : "Nom",
                 "last_name" : "Prenom",
+        }
+
+class AddressTechForm(forms.ModelForm):
+
+    class Meta:
+        REGIONS = [
+        ("boira" , "bouira"),
+        ("hachimia" , "hachimia"),
+        ("sour" , "sour"),
+        ]
+
+        model = Address
+        fields = ["region","commune","rue","logement"]
+
+        widgets = {
+        "region" : forms.Select(choices = REGIONS)
+        }
+
+        labels = {
+            "region" : "Daira :",
+            "commune" : "la Commune :",
+            "rue" : "Rue :",
+            "logement" : "N° de Logement :",
         }

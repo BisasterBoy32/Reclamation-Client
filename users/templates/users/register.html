@@ -105,16 +105,44 @@
                     </div>
                   </div>
                 </div>
-                <div id="info-entreprise" class="mb-3" >
+                <div class="info-entreprise mb-3" >
                   <input id="e_name" class="form-control" type="text" placeholder="Nom de Votre Entreprise" name="name" >
                 </div>
 
-                <div id="info-personne" class="mb-3">
+                <div class="info-personne mb-3" >
                   <input id="f_name" class="form-control mb-2" type="text" placeholder="Nom" name="first_name"  >
                   <input id="l_name" class="form-control mb-3" type="text" placeholder="Prenom" name="last_name"  >
                 </div>
                 {{ u_form.as_p }}
                 {{ p_form.as_p }}
+
+                <div class="info-entreprise mt-3">
+                  <label for="">L'address de votre entreprise :</label>
+
+                  <select  id="e_region" class="form-control mb-2" name="e_region">
+                    <option value="bouira" >bouira</option>
+                    <option value="sour" >sour</option>
+                    <option value="hachimia" >hachimia</option>
+                  </select>
+
+                  <input id="e_commune" class="form-control mb-2" type="text" placeholder="La Commune" name="e_commune" >
+                  <input id="e_rue" class="form-control mb-2" type="text" placeholder="La Rue" name="e_rue" >
+                </div>
+
+                <div class="info-personne mt-3">
+                  <label for=""> Votre Address :</label>
+
+                  <select  id="p_region" class="form-control mb-2" name="region">
+                    <option value="bouira" >bouira</option>
+                    <option value="sour" >sour</option>
+                    <option value="hachimia" >hachimia</option>
+                  </select>
+
+                  <input id="p_commune" class="form-control mb-2" type="text" placeholder="La Commune" name="commune" >
+                  <input id="p_rue" class="form-control mb-2" type="text" placeholder="La Rue" name="rue" >
+                  <input id="p_logement" class="form-control mb-2" type="text" placeholder="N° de Logement" name="logement" >
+                </div>
+
                 <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">S'inscrire</button>
               </form>
           </div>

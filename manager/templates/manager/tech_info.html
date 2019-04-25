@@ -1,7 +1,7 @@
 {% extends 'manager/base3.html' %}
 
 
-
+{% load crispy_forms_tags %}
 {% block list%}
 <ul class="list-group ">
  <a href="{% url 'list_tech' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
@@ -35,6 +35,7 @@
 
             {{ u_form.as_p }}
             {{ p_form.as_p }}
+            {{ a_form|crispy }}
 
             <div class="inscrire">
               <button class="btn btn-primary  btn-sm " type="submit" name="button">Changer </button>

@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 from requets.models import Requet
 from django.contrib.auth.models import User
 from users.models import Profile
-from .forms import AddAdminForm ,UserChangeInfoForm ,ProfileAdminForm
+from .forms import AddAdminForm ,UserChangeInfoForm ,ProfileAdminForm ,AddressTechForm
 from .forms import EditRequetForm
 from django.db.models import Q
 from django.utils import timezone
@@ -157,6 +157,14 @@ def requet_info(request ,id):
     else :
         return HttpResponse("<h1>403 Forbidden </h1>")
 
+# Recherer un requet
+@login_required
+def search_requet(request):
+    if request.user.profile.group == "admin" :
+        search_element = request.POST["search"]
+        requets = Requet.objects.filter(problem__icontains = search_element)
+        return render(request,"manager/search_requet.html",{"requets" : requets})
+
 # <--------------------------- tech part ----------------------------------------------->
 # register tech
 @login_required
@@ -165,8 +173,9 @@ def register_employee(request):
         if request.method == 'POST':
             u_form = AddAdminForm(request.POST)
             p_form = ProfileAdminForm(request.POST)
+            a_form = AddressTechForm(request.POST)
 
-            if u_form.is_valid() and p_form.is_valid() :
+            if u_form.is_valid() and p_form.is_valid() and a_form.is_valid():
                 user = u_form.save()
                 user.set_password(user.password)
                 username = user.username
@@ -174,14 +183,19 @@ def register_employee(request):
                 u_profile.owner = user
                 u_profile.group = "tech"
                 u_profile.save()
+                address = a_form.save(commit = False)
+                address.profile = u_profile
+                address.save()
+
                 messages.success(request,f"le technicien {username} est creé avec success")
                 return redirect("list_tech")
 
         else :
             u_form = AddAdminForm()
             p_form = ProfileAdminForm()
+            a_form = AddressTechForm()
 
-        return render(request,"manager/register_employee.html" ,{"u_form":u_form ,"p_form":p_form})
+        return render(request,"manager/register_employee.html" ,{"u_form":u_form ,"p_form":p_form ,"a_form":a_form})
     else :
         return HttpResponse("<h1>403 Forbidden</h1>")
 
@@ -246,24 +260,27 @@ def tech_info(request ,id):
 
         u_form = UserChangeInfoForm(instance = tech)
         p_form = ProfileAdminForm(instance = tech.profile)
+        a_form = AddressTechForm(instance = tech.profile.address)
 
         if request.method == 'POST'  :
             u_form = UserChangeInfoForm( request.POST ,instance = tech )
             p_form = ProfileAdminForm(request.POST ,instance = tech.profile)
+            a_form = AddressTechForm(request.POST ,instance = tech.profile.address)
 
-            if u_form.is_valid() and p_form.is_valid() :
+            if u_form.is_valid() and p_form.is_valid() and a_form.is_valid() :
                 email1 = u_form.cleaned_data["email"]
                 if User.objects.filter(email = email1).exclude(username = tech.username).exists():
                     error1 = "l'adresse e-mail que vous avez entrée est déjà enregistrée,"
-                    return render(request,"manager/tech_info.html",{"u_form":u_form,"p_form":p_form,"error1":error1,"tech":tech})
+                    return render(request,"manager/tech_info.html",{"u_form":u_form ,"a_form":a_form ,"p_form":p_form,"error1":error1,"tech":tech})
                 else :
                     u_form.save()
                     p_form.save()
+                    a_form.save()
                     username = tech.username
                     messages.success(request,f"Les informations de {username} ont été modifiées avec succès")
                     return redirect("tech_info" ,id = tech.id)
 
-        return render(request,"manager/tech_info.html",{"u_form":u_form ,"p_form":p_form,"tech":tech})
+        return render(request,"manager/tech_info.html",{"u_form":u_form ,"p_form":p_form,"a_form":a_form ,"tech":tech})
 
     else :
         return HttpResponse("<h1> 403 Forbidden </h1>")
@@ -314,3 +331,24 @@ class PersonneDeleteView(LoginRequiredMixin , UserPassesTestMixin ,DeleteView):
 
     def get_success_url(self):
         return reverse("list_personne")
+
+#recherch un client
+@login_required
+def search_client(request):
+    if request.user.profile.group == "admin" :
+        search_element = request.POST["search"]
+        clients = User.objects.filter(
+         Q(profile__type = "personne") & (Q(username__icontains = search_element) | Q(profile__personne__first_name__icontains = search_element) |
+          Q(profile__personne__last_name__icontains = search_element) | Q(profile__phone_number__icontains = search_element))
+        )
+        return render(request , "manager/search_client.html",{"clients" : clients})
+
+#recherch un entrprise
+def search_entrprise(request):
+    if request.user.profile.group == "admin" :
+        search_element = request.POST["search"]
+        clients = User.objects.filter(
+         Q(profile__type = "entreprise") & (Q(username__icontains = search_element) | Q(profile__company__name__icontains = search_element) |
+          Q(profile__phone_number__icontains = search_element))
+        )
+        return render(request , "manager/search_entrprise.html",{"clients" : clients})

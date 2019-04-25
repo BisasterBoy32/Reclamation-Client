@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm , UserChangeForm
-from .models import Profile ,Personne ,Company
+from .models import Profile ,Personne ,Company ,Address
 from django.utils.translation import gettext_lazy as _
 
 
@@ -87,19 +87,13 @@ class ProfileForm(forms.ModelForm):
     class Meta :
 
         model = Profile
-        fields = ["location","phone_number"]
+        fields = ["phone_number"]
         widgets = {
-                    "location" : forms.TextInput(attrs={ "class":"form-control location" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Commune /Rue /N° de Logement"}),
                     "phone_number" : forms.TextInput(attrs={ "class":"form-control " ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre telephone fix"}),
                     }
 
         labels = {
-            "location" : "",
             "phone_number" : "",
-        }
-
-        help_texts = {
-        "location" : "Assurez-vous d'entrer le bon et l'endroit exact dans lequel vous vivez afin que nous puissions vous rejoindre facilement."
         }
 
     def clean(self):
@@ -131,14 +125,12 @@ class ProfileChangeForm(forms.ModelForm):
 
     class Meta :
         model = Profile
-        fields = ["location","phone_number"]
+        fields = ["phone_number"]
         widgets = {
-                    "location" : forms.TextInput(attrs={ "class":"form-control location" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Location"}),
                     "phone_number" : forms.TextInput(attrs={ "class":"form-control " ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre telephone fix"}),
         }
 
         labels = {
-            "location" : "Votre Location",
             "phone_number" : "Votre Telephone Fix",
         }
 
@@ -168,4 +160,51 @@ class CompanyChangeForm(forms.ModelForm):
         }
         labels = {
             "name" : "Entrer le non de votre entreprise",
+        }
+
+class AddressCompanyChangeForm(forms.ModelForm):
+
+    class Meta:
+
+        REGIONS = [
+        ("boira" , "bouira"),
+        ("hachimia" , "hachimia"),
+        ("sour" , "sour"),
+        ]
+
+        model = Address
+        fields = ["region","commune","rue"]
+
+        widgets = {
+        "region" : forms.Select(choices = REGIONS)
+        }
+
+        labels = {
+            "region" : "Daira",
+            "commune" : "la Commune",
+            "rue" : "Rue",
+        }
+
+class AddressPersonneChangeForm(forms.ModelForm):
+
+    class Meta:
+
+        REGIONS = [
+        ("boira" , "bouira"),
+        ("hachimia" , "hachimia"),
+        ("sour" , "sour"),
+        ]
+
+        model = Address
+        fields = ["region","commune","rue","logement"]
+
+        widgets = {
+        "region" : forms.Select(choices = REGIONS)
+        }
+
+        labels = {
+            "region" : "Daira",
+            "commune" : "la Commune",
+            "rue" : "Rue",
+            "logement" : "N° de Logement",
         }

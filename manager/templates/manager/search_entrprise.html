@@ -27,7 +27,7 @@
     <div class="col-5">
     </div>
     <div class="col-3">
-        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher Un Entreprise" aria-label="Search" name="search">
+        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher Un Entreprise" aria-label="Search" name="search" value="{{ request.POST.search }}">
     </div>
     <div class="col-3 mt-1">
         <button type="submit" class="btn btn-sm btn-outline-success" >Recherch</button>
@@ -37,6 +37,7 @@
 
 </form>
 
+<h3 class="mt-3 text-center" > Resultat de recherch <strong class="search">{{ request.POST.search }} </strong>({{ clients.count }})</h3>
 <div class="border  p-1 mt-3 radius ">
 
 <div class="header-siuvi p-3 m-1 radius " >

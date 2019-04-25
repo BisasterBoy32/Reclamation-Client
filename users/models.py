@@ -62,3 +62,14 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+class Address(models.Model):
+
+    profile = models.OneToOneField(Profile , on_delete = models.CASCADE)
+    region = models.CharField(max_length = 256)
+    commune = models.CharField(max_length = 256)
+    rue = models.CharField(max_length = 256)
+    logement = models.IntegerField(null = True)
+
+    def __str__(self):
+        return self.profile.owner.username + " address"

@@ -21,6 +21,22 @@
 
 {% block content %}
 
+<form action="{% url 'search_client' %}" method="post">
+  {% csrf_token %}
+  <div class="row mt-3">
+    <div class="col-5">
+    </div>
+    <div class="col-3">
+        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher Un Personne" aria-label="Search" name="search">
+    </div>
+    <div class="col-3 mt-1">
+        <button type="submit" class="btn btn-sm btn-outline-success" >Recherch</button>
+    </div>
+  </div>
+
+
+</form>
+
 <div class="border  p-1 mt-3 radius ">
 
 <div class="header-siuvi p-3 m-1 radius " >

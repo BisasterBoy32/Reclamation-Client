@@ -20,4 +20,7 @@ urlpatterns = [
     path("list_personne/",views.PersonneListView.as_view(),name="list_personne"),
     path("delete_personne/<int:pk>/",views.PersonneDeleteView.as_view(),name="delete_personne"),
     path("list_enterprise/",views.enterprise_list,name="list_enterprise"),
+    path("search_requet/",views.search_requet,name="search_requet"),
+    path("search_client/",views.search_client,name="search_client"),
+    path("search_entrprise/",views.search_entrprise,name="search_entrprise"),
 ]

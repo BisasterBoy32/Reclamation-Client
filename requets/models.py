@@ -23,7 +23,7 @@ class Requet(models.Model):
 
     def aprove(self):
         self.aprove_date = timezone.now()
-        tech = User.objects.filter(profile__group = "tech").annotate(requet_count = Count("works")).order_by("requet_count").first()
+        tech = User.objects.filter(profile__group = "tech" ,profile__address__region = self.client.profile.address.region).annotate(requet_count = Count("works")).order_by("requet_count").first()
         self.tech = tech
         self.state = "apprové par l'administrateur"
         self.save()

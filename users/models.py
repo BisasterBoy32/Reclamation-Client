@@ -44,6 +44,10 @@ class Profile(models.Model):
     def count_new_requets(self):
         return Requet.objects.filter(state = "ont étape de traitement").count()
 
+    def count_notee_requets(self):
+        return Requet.objects.filter(state = "notée").count()
+
+
 
 
 

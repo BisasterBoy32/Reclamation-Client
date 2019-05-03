@@ -17,6 +17,10 @@
      Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
    </a>
 
+   <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Reclamation notée <span class="badge badge-primary badge-pill"> {{ user.profile.count_notee_requets }} </span></li>
+   </a>
+
   </ul>
 
 {% endblock %}
@@ -34,7 +38,7 @@
     <div class="col-3">
         <input class="form-control mr-sm-2" type="search" placeholder="Recherch un reclamation par le type" aria-label="Search" name="search">
     </div>
-    <div class="col-3 mt-2">
+    <div class="col-3 mt-1">
         <button type="submit" class="btn btn-sm btn-outline-success" >Recherch</button>
     </div>
   </div>
@@ -86,7 +90,8 @@
           </div>
 
           <div class="col-11">
-          <a class="a-hovered" href="{% url 'manager_requet_info' requet.id %}"> {{ requet.summary }} </a>
+          <a class="a-hovered" href="{% url 'manager_requet_info' requet.id %}"> {{ requet.problem }}
+           </a>
           </div>
         </div>
       </div>
@@ -95,11 +100,21 @@
         <div class="row">
           {% if requet.client.profile.type == "entreprise" %}
           <div class="col-3 text-center">
-            <span class="mr-1 "><a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}">{{ requet.client }}</a></span> <i class="fas fa-building"></i>
+            <span class="mr-1 ">
+              <a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}">{{ requet.client }}
+              </a></span> <i class="fas fa-building"></i>
+              {% if requet.fix_confirm == True %}
+              <span class=" ml-1" ><i class="fas fa-smile" style="color : #00bd56;"></i></span>
+              {% endif %}
           </div>
           {% elif requet.client.profile.type == "personne" %}
           <div class="col-3 text-center">
-            <span class="mr-1"><a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}">{{ requet.client }}</a></span> <i class="fas fa-user"></i>
+            <span class="mr-1">
+              <a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}">{{ requet.client }}</a>
+            </span> <i class="fas fa-user"></i>
+            {% if requet.fix_confirm == True %}
+            <span class=" ml-1" ><i class="fas fa-smile" style="color : #00bd56;"></i></span>
+            {% endif %}
           </div>
           {% endif %}
 

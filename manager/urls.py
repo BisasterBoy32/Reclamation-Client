@@ -23,4 +23,13 @@ urlpatterns = [
     path("search_requet/",views.search_requet,name="search_requet"),
     path("search_client/",views.search_client,name="search_client"),
     path("search_entrprise/",views.search_entrprise,name="search_entrprise"),
+    path("requet_notée/",views.RequetsNoteeListView.as_view(),name="requet_notée"),
+    path("static_tech/",views.techs,name="static_tech"),
+    path("static_daira/",views.diaras,name="static_diara"),
+    path("static_type/",views.type,name="static_type"),
+    path("static_evolution/",views.evolution,name="static_evolution"),
+    path("static_evolution_day/",views.evolution_day,name="static_evolution_day"),
+    path("chart_data/",views.DataChart.as_view(),name="chart_data"),
+
+
 ]

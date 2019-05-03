@@ -8,7 +8,7 @@
      Noveau Reclamation <span class="badge badge-primary badge-pill"> {{ user.profile.count_new_requets }} </span> </li>
  </a>
 
-   <a href="{% url 'manager_approved_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
+   <a href="{% url 'manager_approved_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
      Reclamation approveé <span class="badge badge-primary badge-pill"> {{ user.profile.count_approved_requets }} </span></li>
  </a>
 
@@ -16,11 +16,11 @@
      Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
    </a>
 
-   <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+   <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
      Reclamation notée <span class="badge badge-primary badge-pill"> {{ user.profile.count_notee_requets }} </span></li>
    </a>
-  </ul>
 
+  </ul>
 {% endblock %}
 
 
@@ -32,34 +32,25 @@
 
 <div class="header-siuvi p-3 m-1 radius " >
   <div class="row mb-3 border-bottom pb-2 ">
-    <div class="col-7">
+    <div class="col-6">
       <div class="row">
         <div class="col-lg-1 col-2 text-center">
           N°:
         </div>
 
-        <div class="col-lg-3 col-3 text-center">
+        <div class="col-lg-11 col-10 text-center">
           Reclamation
-        </div>
-        <div class="col-lg-4 col-4 text-center">
-          Date De Creation
-        </div>
-        <div class="col-lg-4 col-4 text-center">
-          Date de Approvation
         </div>
       </div>
     </div>
 
-    <div class="col-5">
+    <div class="col-6">
       <div class="row">
-        <div class="col-3 text-center">
+        <div class="col-6 text-center">
           Client
         </div>
         <div class="col-3 text-center">
-          Technicien
-        </div>
-        <div class="col-3 text-center">
-          Montrer / Modifier
+          Acceder
         </div>
         <div class="col-3 text-center">
           Suprimer
@@ -71,41 +62,29 @@
 
   {% for requet in requets %}
     <div class="row mt-3 border-bottom pb-2 ">
-      <div class="col-7">
+      <div class="col-6">
         <div class="row">
           <div class="col-1 text-center">
             {{ requet.id }}
           </div>
 
-          <div class="col-3 text-center">
+          <div class="col-11">
             {{ requet.problem }}
-          </div>
-
-          <div class="col-4 text-center">
-            {{ requet.pub_date|date:"d/m/Y , H : i" }}
-          </div>
-
-          <div class="col-4 text-center">
-            {{ requet.aprove_date|date:"d/m/Y , H : i" }}
           </div>
         </div>
       </div>
 
-      <div class="col-5 ">
+      <div class="col-6 ">
         <div class="row">
           {% if requet.client.profile.type == "entreprise" %}
-          <div class="col-3 text-center">
+          <div class="col-6 text-center">
             <span class="mr-1 "><a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}">{{ requet.client }}</a></span> <i class="fas fa-building"></i>
           </div>
           {% elif requet.client.profile.type == "personne" %}
-          <div class="col-3 text-center">
+          <div class="col-6 text-center">
             <span class="mr-1"><a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}">{{ requet.client }}</a></span> <i class="fas fa-user"></i>
           </div>
           {% endif %}
-
-        <div class="col-3 text-center">
-            <a class="a-hovered" href="{% url 'tech_info' requet.tech.id %}"> {{ requet.tech }}</a>
-        </div>
 
         <div class="col-3 text-center">
           <form  action="{% url 'edit_requet' requet.id %}" method="get">
@@ -129,35 +108,5 @@
   {% endfor %}
   </div>
 </div>
-
-<div class=" text-center mt-3">
-
-  {% if page_obj %}
-
-  {% if page_obj.has_previous %}
-  <a href="?page=1"> <button class="btn btn-outline-info btn-sm" type="button" >première</button></a>
-  <a href="?page={{ page_obj.previous_page_number }}"> <button class="btn btn-outline-info btn-sm" type="button" > <span aria-hidden="true">&laquo;</span></button></a>
-  {% else %}
-  <button class="btn btn-danger btn-sm" type="button" disabled> première </button>
-  {% endif %}
-
-  {% for num in page_obj.paginator.page_range %}
-  {% if page_obj.number == num %}
-  <a href="?page={{ num }}"> <button class="btn btn-primary btn-sm" type="button" > {{ num }}</button></a>
-  {% endif %}
-  {% endfor %}
-
-  {% if page_obj.has_next %}
-  <a href="?page={{ page_obj.next_page_number }}"> <button class="btn btn-outline-info btn-sm" type="button" > <span aria-hidden="true">&raquo;</span> </button></a>
-  <a href="?page={{ page_obj.paginator.num_pages }}"> <button class="btn btn-outline-info btn-sm" type="button" > dernière </button></a>
-  {% else %}
-  <button class="btn btn-danger btn-sm" type="button" disabled> dernière </button>
-  {% endif %}
-
-
-  {% endif %}
-
-</div>
-
 
 {% endblock %}

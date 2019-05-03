@@ -8,6 +8,18 @@
   <p> {{ requet.content }}</p><br>
 </div>
 
+{% if requet.nots.count > 0 %}
+
+<div class="alert alert-danger border-bottom p-3 m-4">
+  {% if requet.nots.last.owner.profile.group == "tech" %}
+Notifée Par le Technicien  : {{ requet.nots.last.owner.username  }}<br />
+ {% else %}
+Notifée Par le Client  : {{ requet.nots.last.owner.username  }}<br />
+ {% endif %}
+    Notification  : <br /> {{ requet.nots.last.content  }}
+</div>
+
+{% endif %}
 
 {% if requet.client.profile.type == "personne"%}
 
@@ -39,12 +51,31 @@
 
     <div class="row mb-3  pb-2 border-bottom client-info">
       <div class="text-center col-6 ">
-        Location
+          Daira
       </div>
       <div class="text-center col-6 ">
-        {{ client.profile.location }}
+        {{ client.profile.address.region }}
       </div>
     </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+          La Commune
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.address.commune }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+          Rue / N° de Logement
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.address.rue }} /  {{ client.profile.address.logement }}
+      </div>
+    </div>
+
     <div class="row mb-3  pb-2 border-bottom client-info">
       <div class="text-center col-6 ">
         Telephone FIx
@@ -59,13 +90,18 @@
        Date De Réclamation
        </div>
         <div class="text-center col-6 ">
-        {{ requet.pub_date|date:"d M Y, h : m" }}
+        {{ requet.pub_date|date:"d / m / Y, H : i" }}
        </div>
     </div>
 
     <form action="{% url 'problem_fixed' requet.id %}" method="post">
       {% csrf_token %}
       <button type="submit" class="btn btn-block btn-sm btn-outline-success inscrire mb-1"> Problème résolu</button>
+    </form>
+
+    <form action="{% url 'note' client.id requet.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-block btn-sm btn-outline-danger inscrire mb-1"> ne peut pas résoudre le problème</button>
     </form>
 
   </div>
@@ -92,10 +128,28 @@
 
     <div class="row mb-3  pb-2 border-bottom client-info">
       <div class="text-center col-6 ">
-        Location
+          Daira
       </div>
       <div class="text-center col-6 ">
-        {{ client.profile.location }}
+        {{ client.profile.address.region }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+          La Commune
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.address.commune }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+          Rue
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.address.rue }}
       </div>
     </div>
 
@@ -113,13 +167,18 @@
         Date De Réclamation
       </div>
       <div class="text-center col-6 ">
-        {{  requet.pub_date|date:"d M Y, h : m" }}
+        {{  requet.pub_date|date:"d / m / Y, H : i" }}
       </div>
     </div>
 
     <form action="{% url 'problem_fixed' requet.id %}" method="post">
       {% csrf_token %}
-      <button type="submit" class="btn btn-block btn-sm btn-outline-success inscrire mb-1"> Problème résolu</button>
+      <button type="submit" class="btn btn-block btn-sm btn-outline-success inscrire mb-2"> Problème résolu</button>
+    </form>
+
+    <form action="{% url 'note' client.id requet.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-block btn-sm btn-outline-danger inscrire mb-3"> ne peut pas résoudre le problème</button>
     </form>
 
   </div>

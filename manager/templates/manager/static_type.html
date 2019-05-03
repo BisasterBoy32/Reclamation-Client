@@ -1,0 +1,42 @@
+{% extends "manager/base3.html" %}
+
+{% load staticfiles %}
+{% block list%}
+
+  <ul class="list-group ">
+   <a href="{% url 'static_tech' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Répartition par Tech </li>
+ </a>
+
+   <a href="{% url 'static_diara' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Répartition par diara</li>
+ </a>
+
+   <a href="{% url 'static_type' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
+     Répartition par catégorie </li>
+   </a>
+
+   <a href="{% url 'static_evolution' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Evolution Des Reclamation Par Semaine </li>
+   </a>
+
+   <a href="{% url 'static_evolution_day' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Evolution Des Reclamation Par Jour </li>
+   </a>
+
+  </ul>
+{% endblock %}
+
+
+
+
+{% block content %}
+
+<h1 class="text-center" > Réparition Des Reclamation Par Chaque Catégorie </h1>
+
+
+<canvas id="myChart" width="450" height="140"></canvas>
+<script type="text/javascript" src="{% static 'chart_script_type.js' %}">
+
+</script>
+{% endblock %}

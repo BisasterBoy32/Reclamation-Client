@@ -17,6 +17,10 @@
      Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
    </a>
 
+   <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Reclamation notée <span class="badge badge-primary badge-pill"> {{ user.profile.count_notee_requets }} </span></li>
+   </a>
+
   </ul>
 
 {% endblock %}
@@ -36,8 +40,11 @@
           N°:
         </div>
 
-        <div class="col-lg-11 col-10 text-center">
+        <div class="col-lg-7 col-6 text-center">
           Reclamation
+        </div>
+        <div class="col-lg-4 col-4 text-center">
+          Date De Creation
         </div>
       </div>
     </div>
@@ -69,8 +76,11 @@
             {{ requet.id }}
           </div>
 
-          <div class="col-11">
-            {{ requet.content }}
+          <div class="col-7 text-center">
+            {{ requet.problem }}
+          </div>
+          <div class="col-4 text-center">
+            {{ requet.pub_date|date:"d/m/Y , H : i" }}
           </div>
         </div>
       </div>

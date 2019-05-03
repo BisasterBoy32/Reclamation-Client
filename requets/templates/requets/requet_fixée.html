@@ -2,41 +2,43 @@
 
 {% block content %}
 
-<div class="container border  p-1 m-3 radius">
+{% if requet %}
+    <div class="container border  p-1 m-3 radius">
+    <div class="row">
 
-<div class="header-siuvi p-3 m-1 radius" >
-  <div class="row mb-3 border-bottom pb-2 ">
-    <div class="col-md-8 col-6">
-      Votre Requets
-    </div>
-    <div class="col-md-2 col-4">
-      Date de réform
-    </div>
-    <div class="col-md-2 col-2">
-      Suprimer Requet
+        <div class="col-md-6 col-6 card border-dark mb-3 p-3 card centered" >
+          <div class="card-header">Date De Reclamation : {{ requet.pub_date|date:"d/m/Y , H : i" }}</div>
+          <div class="card-body text-dark">
+            <h5 class="card-title">Votre Requets</h5>
+            <p class="card-text">{{ requet.problem }}</p>
+          </div>
+          <div class="row">
+
+            <div class="col-6">
+              <form  action="{% url 'success_view' requet.id %}" method="get">
+                {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-success btn-block btn-sm" >
+                    Le problème a été résolu avec<br /> succès
+                  </button>
+              </form>
+            </div>
+
+            <div class="col-6">
+              <form  action="{% url 'note' user.id requet.id %}" method="get">
+                {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-danger btn-block btn-sm" >
+                    Le problème n'a pas résolu et j'ai toujours le même problème
+                  </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
     </div>
   </div>
 
-
-  {% for requet in requets %}
-    <div class="row mt-3 border-bottom pb-2 ">
-      <div class="col-md-8 col-6">
-        {{ requet.content }}
-      </div>
-      <div class="col-md-2 col-4">
-        {{ requet.fix_date|date:"d M Y, H:m " }}
-      </div>
-      <div class="col-md-2 col-2">
-        <form  action="{% url 'delete_requete' requet.id %}" method="get">
-          {% csrf_token %}
-            <button type="submit" class="btn btn-outline-danger btn-sm" ><i class="fas fa-backspace"></i></button>
-        </form>
-      </div>
-    </div>
-
-  {% endfor %}
-  </div>
-</div>
-
-
+{% else %}
+<h1 class="text-center p-4"> Aucun Reclamation fixée </h1>
+{% endif %}
 {% endblock %}

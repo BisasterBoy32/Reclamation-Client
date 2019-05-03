@@ -53,7 +53,7 @@ body{
   margin: auto;
 }
 .header-siuvi{
-  background-color: #acdeaa;
+  background-color: #8fbbaf;
 }
 .radius{
   border-radius: 5px;
@@ -157,7 +157,27 @@ body{
 .search{
   color : #ff4d4d;
 }
-
+.card{
+  background-color: #9fd3c7;
+}
+.rec-s{
+  background-color: #ff5959;
+}
+.rec-a{
+  background-color: #fccf4d;
+}
+.rec-r1{
+  background-color: #85ef47;
+}
+.rec-r2{
+  background-color: #00bd56;
+}
+.btn-delete{
+  border : none;
+}
+.btn-delete:hover{
+  color : #ff5959;
+}
 /* ------------------------------- fc6b3f    nav bar styling ---------------------------------------------------*/
 
 

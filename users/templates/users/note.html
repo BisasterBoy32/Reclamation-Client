@@ -1,0 +1,29 @@
+{% extends 'requets/base2.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container border p-4 m-4">
+    <p>Le problem est : {{ requet.problem }}</p>
+  Description de problem :
+  <p> {{ requet.content }}</p><br>
+</div>
+
+<form  action="{% url 'note' user.id requet.id %}" method="post">
+  {% csrf_token %}
+
+  <legend class="btn-bottm mt-3 mb-3 pb-1"> Crea Un Notification Pour Cette Reclamation </legend>
+  {{ form|crispy}}
+
+{% if user.profile.group == "tech" %}
+<button type="submit" class="btn btn-primary">Envoyer Notification</button>
+  <a href="{% url 'requet_info' client.id requet.id %}"><button type="button" class="btn btn-secondary">Return
+</button></a>
+{% elif user.profile.group == "client" %}
+<button type="submit" class="btn btn-primary">Envoyer Notification</button>
+  <a href="{% url 'requet_fixée' requet.id  %}"><button type="button" class="btn btn-secondary">Return
+</button></a>
+{% endif %}
+</form>
+
+{% endblock %}

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render ,redirect ,get_object_or_404
 from django.contrib import auth
 from django.urls import reverse
@@ -13,6 +15,11 @@ from .forms import AddAdminForm ,UserChangeInfoForm ,ProfileAdminForm ,AddressTe
 from .forms import EditRequetForm
 from django.db.models import Q
 from django.utils import timezone
+
+# rest rest_framework imports
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 
 
 
@@ -67,7 +74,7 @@ class RequetsApprovedListView( LoginRequiredMixin , UserPassesTestMixin ,ListVie
     paginate_by = 4
 
     def get_queryset(self):
-        return Requet.objects.filter(state = "apprové par l'administrateur").order_by("-pub_date")
+        return Requet.objects.filter(state = "apprové par l'administrateur").order_by("client__profile__type","-pub_date")
 
     def test_func(self):
         return self.request.user.profile.group == "admin"
@@ -88,7 +95,18 @@ class RequetsFixedListView( LoginRequiredMixin , UserPassesTestMixin ,ListView):
     def test_func(self):
         return self.request.user.profile.group == "admin"
 
+# reclamation after the failre of the technicien to fix it
+class RequetsNoteeListView( LoginRequiredMixin , UserPassesTestMixin ,ListView):
+    model = Requet
+    template_name = "manager/reclamation_notifée.html"
+    ordering = ["-fix_date"]
+    context_object_name = "requets"
 
+    def get_queryset(self):
+        return Requet.objects.filter(state = "notée").order_by("-fix_date")
+
+    def test_func(self):
+        return self.request.user.profile.group == "admin"
 
 
 class RequetDeleteView(LoginRequiredMixin , UserPassesTestMixin ,DeleteView ):
@@ -121,7 +139,7 @@ def edit_requet(request ,id ):
             form =  EditRequetForm(request.POST ,instance = requet)
             if form.is_valid():
                 form.save()
-                if requet.state == "ont étape de traitement" :
+                if requet.state == "ont étape de traitement" or "notée" :
                     requet.state = "apprové par l'administrateur"
                     requet.aprove_date = timezone.now()
                     requet.save()
@@ -339,7 +357,8 @@ def search_client(request):
         search_element = request.POST["search"]
         clients = User.objects.filter(
          Q(profile__type = "personne") & (Q(username__icontains = search_element) | Q(profile__personne__first_name__icontains = search_element) |
-          Q(profile__personne__last_name__icontains = search_element) | Q(profile__phone_number__icontains = search_element))
+          Q(profile__personne__last_name__icontains = search_element) | Q(profile__phone_number__icontains = search_element) |
+          Q(profile__address__region__icontains = search_element) |  Q(profile__address__commune__icontains = search_element) )
         )
         return render(request , "manager/search_client.html",{"clients" : clients})
 
@@ -349,6 +368,138 @@ def search_entrprise(request):
         search_element = request.POST["search"]
         clients = User.objects.filter(
          Q(profile__type = "entreprise") & (Q(username__icontains = search_element) | Q(profile__company__name__icontains = search_element) |
-          Q(profile__phone_number__icontains = search_element))
+         Q(profile__phone_number__icontains = search_element) | Q(profile__address__region__icontains = search_element) |
+         Q(profile__address__commune__icontains = search_element))
         )
         return render(request , "manager/search_entrprise.html",{"clients" : clients})
+
+# <------------------------------ Les Statistiques ------------------------------------------------------------------>
+
+def techs(request):
+    return render(request,"manager/static_tech.html")
+
+def diaras(request):
+    return render(request,"manager/static_daira.html")
+
+def type(request):
+    return render(request,"manager/static_type.html")
+
+def evolution(request):
+    return render(request,"manager/static_evolution.html")
+
+def evolution_day(request):
+    return render(request,"manager/static_evolution_day.html")
+
+#sending the data as a json format
+class DataChart(APIView):
+
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        techs = []
+        works = []
+        daira = ["bouira","sour","hachimia"]
+        reclamations = []
+        types = ["Coupage telephonique" ,"Autre Problem" , "Problem internet"]
+        reclamtions_type = []
+        begenning_date = datetime(2019,1,1)
+        weeks = []
+        weeks_show = []
+        reclamation_week = []
+        beg_date = datetime(2019,datetime.now().month,1)
+        days = []
+        days_show = []
+        reclamation_day = []
+
+        # all the weeks for this year
+        date1 = begenning_date
+        while date1 < datetime.now():
+            add = date1.day + 7
+            if date1.month == 2 :
+                if add <= 28 :
+                    date1 = date1.replace(day = add)
+                    weeks.append(date1)
+                else :
+                    add1 = 28 - date1.day
+                    add = 7 - add1
+                    add_month = date1.month + 1
+                    date1 = date1.replace(day = add)
+                    date1 = date1.replace(month = add_month)
+                    weeks.append(date1)
+            elif date1.month % 2 == 0 :
+                if add <= 30 :
+                    date1 = date1.replace(day = add)
+                    weeks.append(date1)
+                else :
+                    add1 = 30 - date1.day
+                    add = 7 - add1
+                    add_month = date1.month + 1
+                    date1 = date1.replace(day = add)
+                    date1 = date1.replace(month = add_month)
+                    weeks.append(date1)
+            else  :
+                if add <= 31 :
+                    date1 = date1.replace(day = add)
+                    weeks.append(date1)
+                else :
+                    add1 = 31 - date1.day
+                    add = 7 - add1
+                    add_month = date1.month + 1
+                    date1 = date1.replace(day = add)
+                    date1 = date1.replace(month = add_month)
+                    weeks.append(date1)
+
+        #all this month days :
+        while beg_date < datetime.now() :
+            days.append(beg_date)
+            beg_date = beg_date.replace(day = beg_date.day + 1)
+
+        #les reclamation de chaque jour :
+        for index in range(1,len(days)):
+            rec = Requet.objects.filter(pub_date__range = (days[index-1] ,days[index])).count()
+            reclamation_day.append(rec)
+
+        #les reclamation par chaque semaine
+        for index in range(1,len(weeks)):
+            rec = Requet.objects.filter(pub_date__range = (weeks[index-1] ,weeks[index])).count()
+            reclamation_week.append(rec)
+
+        # reclamation de chaque categorie(type)
+        for type in  types :
+            rec_type = Requet.objects.filter(problem = type).count()
+            reclamtions_type.append(rec_type)
+
+        # reclamation de chaque daira
+        for item in  daira :
+            rec_par_daira = Requet.objects.filter(client__profile__address__region = item).count()
+            reclamations.append(rec_par_daira)
+
+        #reclamation de fixée par chaque tech
+        for tech in User.objects.filter(profile__group = "tech") :
+            techs.append(tech.username)
+            works.append(tech.works.filter(state = "Problème Résolu").count())
+
+
+        #orgnaze the weeks appearense
+        for week in weeks :
+            weeks_show.append(str(week.day) + "/"+ str(week.month) + "/" + str(week.year))
+
+        #orgnaze the days appearense
+        for day in days :
+            days_show.append(str(day.day) + "/"+ str(day.month) + "/" + str(day.year))
+
+        data = {
+        "techs":techs,
+        "works":works ,
+        "daira":daira,
+         "reclamations":reclamations,
+         "types" : types,
+         "reclamations_type":reclamtions_type,
+         "weeks":weeks_show,
+         "reclamation_week" : reclamation_week,
+         "days" : days_show,
+         "reclamation_day" : reclamation_day,
+        }
+
+        return Response(data)

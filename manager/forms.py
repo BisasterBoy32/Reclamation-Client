@@ -1,5 +1,5 @@
 from django import forms
-from requets.models import Requet
+from requets.models import Requet , Notification
 from users.models import Profile ,Address
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -157,3 +157,14 @@ class AddressTechForm(forms.ModelForm):
             "rue" : "Rue :",
             "logement" : "N° de Logement :",
         }
+
+class NotificationForm(forms.ModelForm):
+
+    class Meta:
+        model = Notification
+        fields = ["content",]
+
+        labels = {
+        "content" : "écrire le problème avec précision : "
+        }
+        

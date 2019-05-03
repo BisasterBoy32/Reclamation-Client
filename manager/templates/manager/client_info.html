@@ -47,12 +47,31 @@
 
     <div class="row mb-3  pb-2 border-bottom client-info">
       <div class="text-center col-6 ">
-        Location
+          Daira
       </div>
       <div class="text-center col-6 ">
-        {{ client.profile.location }}
+        {{ client.profile.address.region }}
       </div>
     </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+          La Commune
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.address.commune }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+          Rue / N° de Logement
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.address.rue }} /  {{ client.profile.address.logement }}
+      </div>
+    </div>
+
     <div class="row mb-3  pb-2 border-bottom client-info">
       <div class="text-center col-6 ">
         Telephone FIx
@@ -95,10 +114,28 @@
 
     <div class="row mb-3  pb-2 border-bottom client-info">
       <div class="text-center col-6 ">
-        Location
+          Daira
       </div>
       <div class="text-center col-6 ">
-        {{ client.profile.location }}
+        {{ client.profile.address.region }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+          La Commune
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.address.commune }}
+      </div>
+    </div>
+
+    <div class="row mb-3  pb-2 border-bottom client-info">
+      <div class="text-center col-6 ">
+          Rue
+      </div>
+      <div class="text-center col-6 ">
+        {{ client.profile.address.rue }}
       </div>
     </div>
 
@@ -113,8 +150,203 @@
 
   </div>
 
-
 {% endif %}
+  <!-- Les Reclamation fixeé de cette client -->
+
+  <h3 class="text-center border-bottom pb-2 mb-3 mt-3"> L'historique de {{ client.username }} Client </h3>
+
+  <div class="border  p-1 mt-3 radius ">
+
+  <div class="header-siuvi p-3 m-1 radius " >
+    <div class="row mb-3 border-bottom pb-2 ">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-lg-1 col-2 text-center">
+            N°:
+          </div>
+
+          <div class="col-lg-7 col-6 text-center">
+            Reclamation
+          </div>
+          <div class="col-lg-4 col-4 text-center">
+            Date De Creation
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="row">
+          <div class="col-3 text-center">
+            Technicien
+          </div>
+          <div class="col-6 text-center">
+            fixed date
+          </div>
+          <div class="col-3 text-center">
+            Suprimer
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    {% for requet in client.requets.all %}
+
+        {% if requet.state == "ont étape de traitement" %}
+
+              <div class="row mt-3 border-bottom pb-2 rec-s">
+                <div class="col-6">
+                  <div class="row">
+                    <div class="col-lg-1 col-2 text-center mt-2">
+                      {{ requet.id }}
+                    </div>
+
+                    <div class="col-lg-7 col-6 text-center mt-2">
+                      <a class="a-hovered" href="{% url 'manager_requet_info' requet.id %}"> {{ requet.problem }}
+                       </a>
+                    </div>
+                    <div class="col-lg-4 col-4 text-center mt-2">
+                      {{ requet.pub_date|date:"d/m/Y , H : i" }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="row">
+                    <div class="col-3 text-center mt-2">
+                      //
+                    </div>
+                    <div class="col-6 text-center mt-2">
+                      //
+                    </div>
+                    <div class="col-3 text-center ">
+                    <form  action="{% url 'manager_delete_requet' requet.id %}" method="get">
+                      {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm mt-2" ><i class="fas fa-backspace"></i></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        {% elif requet.state == "apprové par l'administrateur" %}
+
+        <div class="row mt-3 border-bottom pb-2 rec-a">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-lg-1 col-2 text-center mt-2">
+                {{ requet.id }}
+              </div>
+
+              <div class="col-lg-7 col-6 text-center mt-2">
+                <a class="a-hovered" href="{% url 'manager_requet_info' requet.id %}"> {{ requet.problem }}
+                 </a>
+              </div>
+              <div class="col-lg-4 col-4 text-center mt-2">
+                {{ requet.pub_date|date:"d/m/Y , H : i" }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="row">
+              <div class="col-3 text-center mt-2">
+                {{ requet.tech }}
+              </div>
+              <div class="col-6 text-center mt-2">
+                //
+              </div>
+              <div class="col-3 text-center ">
+              <form  action="{% url 'manager_delete_requet' requet.id %}" method="get">
+                {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-danger btn-sm mt-2" ><i class="fas fa-backspace"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+        </div>
+        {% elif requet.state == "Problème Résolu" and  requet.fix_confirm == False %}
+
+        <div class="row mt-3 border-bottom pb-2 rec-r1">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-lg-1 col-2 text-center mt-2">
+                {{ requet.id }}
+              </div>
+
+              <div class="col-lg-7 col-6 text-center mt-2">
+                <a class="a-hovered" href="{% url 'manager_requet_info' requet.id %}"> {{ requet.problem }}
+                 </a>
+              </div>
+              <div class="col-lg-4 col-4 text-center mt-2">
+                {{ requet.pub_date|date:"d/m/Y , H : i" }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="row">
+              <div class="col-3 text-center mt-2">
+                {{ requet.tech }}
+              </div>
+              <div class="col-6 text-center mt-2">
+                {{ requet.repair_time }}
+              </div>
+              <div class="col-3 text-center ">
+              <form  action="{% url 'manager_delete_requet' requet.id %}" method="get">
+                {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-danger btn-sm mt-2" ><i class="fas fa-backspace"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        {% elif requet.state == "Problème Résolu" and  requet.fix_confirm == True %}
+
+        <div class="row mt-3 border-bottom pb-2 rec-r2">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-lg-1 col-2 text-center mt-2">
+                {{ requet.id }}
+              </div>
+
+              <div class="col-lg-7 col-6 text-center mt-2">
+                <a class="a-hovered" href="{% url 'manager_requet_info' requet.id %}"> {{ requet.problem }}
+                 </a>
+              </div>
+              <div class="col-lg-4 col-4 text-center mt-2">
+                {{ requet.pub_date|date:"d/m/Y , H : i" }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="row">
+              <div class="col-3 text-center mt-2">
+                {{ requet.tech }}
+              </div>
+              <div class="col-6 text-center mt-2">
+                {{ requet.repair_time }}
+              </div>
+              <div class="col-3 text-center ">
+              <form  action="{% url 'manager_delete_requet' requet.id %}" method="get">
+                {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-danger btn-sm mt-2" ><i class="fas fa-backspace"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        </div>
+
+        {% endif %}
+      {% endfor %}
+      </div>
+    </div>
+    </div>
+  </div>
+
 
 
 {% endblock %}

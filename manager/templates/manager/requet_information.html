@@ -38,7 +38,7 @@
 
       <div class="text-center content-text mb-2">
         Crea par l'utulisateur {{ requet.client.username }} à :
-              {{ requet.pub_date|date:"d M Y, H:m " }}
+              {{ requet.pub_date|date:"d/m/Y , H : i" }}
       </div>
 
       <div class="text-center content-text mb-2">
@@ -48,13 +48,13 @@
 
       <div class="text-center content-text mb-2">
         Approveé par l'administrateur à :
-      {{ requet.aprove_date|date:"d M Y, H:m " }}
+      {{ requet.aprove_date|date:"d/m/Y , H : i" }}
       </div>
 
 
       <div class="text-center content-text mb-2">
         Le Prblem Resolu à :
-      {{ requet.fix_date|date:"d M Y, H:m " }}
+      {{ requet.fix_date|date:"d/m/Y , H : i" }}
       </div>
 
       <div class="text-center content-text mb-2">

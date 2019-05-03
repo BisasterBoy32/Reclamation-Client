@@ -13,6 +13,16 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.generic import DetailView
 from django.contrib.auth.mixins import UserPassesTestMixin , LoginRequiredMixin
+from manager.forms import NotificationForm
+
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.conf import settings
+from .tokens import account_activation_token
+
 
 
 # Create your views here.
@@ -23,8 +33,9 @@ def register(request):
         p_form = ProfileForm(request.POST)
 
         if u_form.is_valid() and p_form.is_valid():
-            user = u_form.save()
-            user.set_password(user.password)
+            user = u_form.save(commit = False)
+            user.is_active = False
+            user.save()
             u_profile = p_form.save(commit = False)
             u_profile.owner = user
             u_type = request.POST["type"]
@@ -50,18 +61,56 @@ def register(request):
                 )
                 address.save()
 
-
+            #in case you want to get rid off the email confirmation : put this return redirect("login") and comment the rest bellow
+            # get current site
+            current_site = get_current_site(request)
             username = user.username
-            new_user = auth.authenticate(request , username = u_form.cleaned_data["username"] , password = u_form.cleaned_data["password1"])
-            auth.login(request ,new_user)
-            messages.success(request,f"l'utilisateur {username} a été créé avec succès")
-            return redirect("home")
+            subject = f"Activation du compte pour le client {username}"
+            # create Message
+            message = render_to_string("users/confirm_user.html", {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+                })
+            html_message = render_to_string("users/confirm_user.html", {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+                })
+            # send activation link to the user
+            user.email_user(subject=subject, message=message, html_message=html_message)
+            return redirect('success_register')
+
 
     else :
         u_form = UserForm()
         p_form = ProfileForm()
 
     return render(request,"users/register.html" ,{"u_form":u_form ,"p_form":p_form})
+
+
+#confirm the user identity
+def success_register(request):
+    return render(request,"users/success_register.html")
+
+def confirm_user(request ,uidb64 ,token):
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except(TypeError, ValueError, OverflowError,User.DoesNotExist):
+            user = None
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+            username = user.username
+            auth.login(request ,user)
+            messages.success(request,f"l'utilisateur {username} a été créé avec succès")
+            return redirect("home")
+        else:
+            return HttpResponse("Invalid Token")
+
 
 
 # log in
@@ -72,14 +121,19 @@ def login_view(request):
         username = request.POST["username"]
         password = request.POST["password"]
 
-        user = auth.authenticate(request ,username = username , password = password)
-        if user :
-            auth.login(request,user)
-            messages.success(request,f"welcome {username}")
-            return redirect("home")
-        else:
-            error = " nom d'utilisateur ou mot de passe n'est pas correcte"
+        user = User.objects.filter(username = username).first()
+        if user and user.is_active == False :
+            error = f"{username} votre compte n'est pas encore activé allez sur votre email et cliquez sur le lien que nous vous avons envoyé pour activer votre compte"
             return render(request,"users/register.html",{"error":error,"u_form":u_form,"p_form":p_form})
+        else :
+            user = auth.authenticate(request ,username = username , password = password)
+            if user  :
+                auth.login(request,user)
+                messages.success(request,f"welcome {username}")
+                return redirect("home")
+            else:
+                error = " nom d'utilisateur ou mot de passe n'est pas correcte"
+                return render(request,"users/register.html",{"error":error,"u_form":u_form,"p_form":p_form})
 
     return render(request,"users/register.html",{"u_form":u_form,"p_form":p_form})
 
@@ -207,5 +261,36 @@ def problem_fixed(request, id):
         messages.success(request,f"Problème de client {client} est reésolu avec success")
         return redirect("tech_requets")
 
+    else :
+        return HttpResponse("<h2> 403 Forbidden </h2>")
+
+@login_required
+def note_view(request , id_r , id_u):
+
+    requet = get_object_or_404(Requet , pk = id_r)
+    owner = get_object_or_404(User , pk = id_u)
+    form = NotificationForm()
+
+    if request.user == requet.client or request.user == requet.tech :
+
+        if request.method == "POST" :
+            form = NotificationForm(request.POST)
+
+            if form.is_valid():
+                requet.requet_note()
+                note = form.save(commit = False)
+                note.owner = owner
+                note.requet = requet
+                note.save()
+                username = owner.username
+                messages.success(request , f"{username} votre notification est crea avec success")
+                if request.user == requet.tech :
+                    requet.tech = None
+                    requet.save()
+                    return redirect("tech_requets" )
+                else :
+                    return redirect("siuvi_requete" )
+
+        return render(request ,"users/note.html",{"form":form ,"client":owner ,"requet":requet})
     else :
         return HttpResponse("<h2> 403 Forbidden </h2>")

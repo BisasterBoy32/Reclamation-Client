@@ -19,9 +19,26 @@
 
 
   {% for requet in requets %}
-    <div class="row mt-3 border-bottom pb-2 ">
-      <div class="col-md-8 col-6">
-        {{ requet.content }}
+    {% if requet.state == "ont étape de traitement" %}
+      <div class="row mt-3 border-bottom pb-2 rec-s">
+        <div class="col-md-8 col-6 ">
+          {{ requet.problem }}
+        </div>
+        <div class="col-md-2 col-4">
+          {{ requet.state }}
+        </div>
+        <div class="col-md-2 col-2">
+          <form  action="{% url 'delete_requete' requet.id %}" method="get">
+            {% csrf_token %}
+              <button type="submit" class="btn btn-outline-danger btn-sm mt-2" ><i class="fas fa-backspace"></i></button>
+          </form>
+        </div>
+      </div>
+    {% elif requet.state == "apprové par l'administrateur" %}
+
+    <div class="row mt-3 border-bottom pb-2 rec-a">
+      <div class="col-md-8 col-6 ">
+        {{ requet.problem }}
       </div>
       <div class="col-md-2 col-4">
         {{ requet.state }}
@@ -29,11 +46,42 @@
       <div class="col-md-2 col-2">
         <form  action="{% url 'delete_requete' requet.id %}" method="get">
           {% csrf_token %}
-            <button type="submit" class="btn btn-outline-danger btn-sm" ><i class="fas fa-backspace"></i></button>
+            <button type="submit" class="btn btn-outline-danger btn-sm mt-2" ><i class="fas fa-backspace"></i></button>
+        </form>
+      </div>
+    </div>
+    {% elif requet.state == "Problème Résolu" and  requet.fix_confirm == False %}
+
+    <div class="row mt-3 border-bottom pb-2 rec-r1">
+      <div class="col-md-8 col-6 ">
+        {{ requet.problem }}
+      </div>
+      <div class="col-md-2 col-4">
+        {{ requet.state }}
+      </div>
+      <div class="col-md-2 col-2">
+        <form  action="{% url 'requet_fixée' requet.id %}" method="get">
+          {% csrf_token %}
+            <button type="submit" class="btn btn-outline-success btn-sm mt-2" ><i class="far fa-calendar-check"></i></button>
         </form>
       </div>
     </div>
 
+    {% elif requet.state == "Problème Résolu" and  requet.fix_confirm == True %}
+
+    <div class="row mt-3 border-bottom pb-2 rec-r2">
+      <div class="col-md-8 col-6 mt-2">
+        {{ requet.problem }}
+      </div>
+      <div class="col-md-2 col-4 mt-2">
+        {{ requet.state }}
+      </div>
+      <div class="col-md-2 col-2">
+          <i class="far fa-smile fa-lg"></i>
+      </div>
+    </div>
+
+    {% endif %}
   {% endfor %}
   </div>
 </div>

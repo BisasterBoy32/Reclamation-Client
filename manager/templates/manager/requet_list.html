@@ -6,7 +6,7 @@
 
   <ul class="list-group ">
    <a href="{% url 'manager_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
-     Noveau Reclamation <span class="badge badge-primary badge-pill"> {{ user.profile.count_new_requets }} </span> </li>
+     Noveau Reclamation <span class="badge badge-primary badge-pill " id="new-reclamation">  </span> </li>
  </a>
 
    <a href="{% url 'manager_approved_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
@@ -18,7 +18,7 @@
    </a>
 
    <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
-     Reclamation notée <span class="badge badge-primary badge-pill"> {{ user.profile.count_notee_requets }} </span></li>
+     Reclamation notée <span class="badge badge-primary badge-pill " id="note">  </span></li>
    </a>
 
   </ul>
@@ -126,5 +126,7 @@
   {% endfor %}
   </div>
 </div>
+<script src="{% static 'count.js' %}">
+</script>
 
 {% endblock %}

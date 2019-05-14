@@ -32,11 +32,11 @@
 
 {% block content %}
 
-<h1 class="text-center" > Evolution Des Reclamation Chaque Jour De Fevrier </h1>
+<h1 class="text-center" > Evolution Des Reclamation Chaque Jour De {{ month }} </h1>
 
 
 <canvas id="myChart" width="450" height="140"></canvas>
-<script type="text/javascript" src="{% static 'chart_script_evolution2.js' %}">
+<script type="text/javascript" src="{% static 'chart/chart_script_evolution2.js' %}">
 
 </script>
 {% endblock %}

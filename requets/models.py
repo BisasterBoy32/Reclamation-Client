@@ -32,6 +32,10 @@ class Requet(models.Model):
         profile__group = "tech" ,profile__address__region = self.client.profile.address.region
         ).annotate(requet_count = requets_approveé).order_by("requet_count").first()
 
+        #in case there is no tech in the same area of the client
+        if tech == None :
+            tech = User.objects.filter(profile__group = "tech").annotate(n_works = requets_approveé).order_by("n_works").first()
+
         self.tech = tech
         self.state = "apprové par l'administrateur"
         self.save()

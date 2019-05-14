@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include("users.urls")),
     path('home/',include("requets.urls")),
-    path('manager/',include("manager.urls"))
+    path('manager/',include("manager.urls")),
+    path('my_api/',include("rest_framework.urls")),
 ]

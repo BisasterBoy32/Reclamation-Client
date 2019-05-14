@@ -1,11 +1,12 @@
 {% extends "manager/base3.html" %}
 
+{% load staticfiles %}
 {% block list%}
 {% if requet.aprove_date %}
 
   <ul class="list-group ">
    <a href="{% url 'manager_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
-     Noveau Reclamation <span class="badge badge-primary badge-pill"> {{ user.profile.count_new_requets }} </span> </li>
+     Noveau Reclamation <span class="badge badge-primary badge-pill" id="new-reclamation"> {{ user.profile.count_new_requets }} </span> </li>
  </a>
 {% if requet.nots.count > 0 %}
    <a href="{% url 'manager_approved_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
@@ -23,11 +24,11 @@
 
    {% if requet.nots.count > 0 %}
    <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success active">
-     Reclamation notée <span class="badge badge-primary badge-pill"> {{ user.profile.count_notee_requets }} </span></li>
+     Reclamation notée <span class="badge badge-primary badge-pill" id="note"> {{ user.profile.count_notee_requets }} </span></li>
    </a>
    {% else %}
    <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
-     Reclamation notée <span class="badge badge-primary badge-pill"> {{ user.profile.count_notee_requets }} </span></li>
+     Reclamation notée <span class="badge badge-primary badge-pill" id="note"> {{ user.profile.count_notee_requets }} </span></li>
    </a>
    {% endif %}
 
@@ -46,6 +47,10 @@
 
    <a href="{% url 'manager_fixed_requets' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
      Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
+   </a>
+
+   <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Reclamation notée <span class="badge badge-primary badge-pill"> {{ user.profile.count_notee_requets }} </span></li>
    </a>
 
   </ul>
@@ -84,8 +89,6 @@ Notifée Par le Client  : {{ requet.nots.last.owner.username  }}<br />
   <div class="border-bottom mt-2 pb-2">
   Le Problem : {{ requet.problem }}
   </div>
-
-
   {% csrf_token %}
   {{ form|crispy  }}
   <button type="submit" class="btn btn-primary btn-sm"> Modifier </button>
@@ -94,3 +97,4 @@ Notifée Par le Client  : {{ requet.nots.last.owner.username  }}<br />
 </div>
 
 {% endblock %}
+

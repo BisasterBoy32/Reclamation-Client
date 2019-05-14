@@ -167,7 +167,7 @@ class AddressCompanyChangeForm(forms.ModelForm):
     class Meta:
 
         REGIONS = [
-        ("boira" , "bouira"),
+        ("bouira" , "bouira"),
         ("hachimia" , "hachimia"),
         ("sour" , "sour"),
         ]
@@ -190,7 +190,7 @@ class AddressPersonneChangeForm(forms.ModelForm):
     class Meta:
 
         REGIONS = [
-        ("boira" , "bouira"),
+        ("bouira" , "bouira"),
         ("hachimia" , "hachimia"),
         ("sour" , "sour"),
         ]

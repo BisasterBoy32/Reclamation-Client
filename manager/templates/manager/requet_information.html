@@ -17,6 +17,10 @@
      Les Problem Fixeé <span class="badge badge-primary badge-pill"> {{ user.profile.count_fixed_requets }} </span></li>
    </a>
 
+   <a href="{% url 'requet_notée' %}" class="a-simple"><li class="list-group-item list-group-item-action list-group-item-success ">
+     Reclamation notée <span class="badge badge-primary badge-pill"> {{ user.profile.count_notee_requets }} </span></li>
+   </a>
+
   </ul>
 
 {% endblock %}

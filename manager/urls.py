@@ -30,6 +30,7 @@ urlpatterns = [
     path("static_evolution/",views.evolution,name="static_evolution"),
     path("static_evolution_day/",views.evolution_day,name="static_evolution_day"),
     path("chart_data/",views.DataChart.as_view(),name="chart_data"),
-
-
+    path("rest_reclamations/",views.ReclamationSetView.as_view({'get': 'list'}),name="rest_reclamations"),
+    path("rest_notes/",views.NotesSetView.as_view({'get': 'list'}),name="rest_notes"),
+    
 ]

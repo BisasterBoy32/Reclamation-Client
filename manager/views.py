@@ -8,19 +8,23 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView ,ListView ,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
-from requets.models import Requet
 from django.contrib.auth.models import User
-from users.models import Profile
-from .forms import AddAdminForm ,UserChangeInfoForm ,ProfileAdminForm ,AddressTechForm
-from .forms import EditRequetForm
 from django.db.models import Q
 from django.utils import timezone
 
 # rest rest_framework imports
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
+from .permissions import IsManager
 
+#my filles
+from .forms import AddAdminForm ,UserChangeInfoForm ,ProfileAdminForm ,AddressTechForm
+from .forms import EditRequetForm
+from requets.models import Requet
+from users.models import Profile
+from .serializers import ReclamationSerializer
 
 
 # Create your views here.
@@ -55,11 +59,11 @@ def login_manager(request):
 class RequetsListView( LoginRequiredMixin , UserPassesTestMixin ,ListView):
     model = Requet
     template_name = "manager/requet_list.html"
-    ordering = ["-pub_date"]
+    ordering = ["pub_date"]
     context_object_name = "requets"
 
     def get_queryset(self):
-        return Requet.objects.filter(state = "ont étape de traitement").order_by("client__profile__type","-pub_date")
+        return Requet.objects.filter(state = "ont étape de traitement").order_by("client__profile__type","pub_date")
 
     def test_func(self):
         return self.request.user.profile.group == "admin"
@@ -376,25 +380,62 @@ def search_entrprise(request):
 # <------------------------------ Les Statistiques ------------------------------------------------------------------>
 
 def techs(request):
-    return render(request,"manager/static_tech.html")
+    if request.user.profile.group == "admin" :
+        return render(request,"manager/static_tech.html")
+    else :
+        return HttpResponse("<h1>Seul l'administrateur peut accéder à cette page</h1>")
 
 def diaras(request):
-    return render(request,"manager/static_daira.html")
+    if request.user.profile.group == "admin" :
+        return render(request,"manager/static_daira.html")
+    else :
+        return HttpResponse("<h1>Seul l'administrateur peut accéder à cette page</h1>")
 
 def type(request):
-    return render(request,"manager/static_type.html")
+    if request.user.profile.group == "admin" :
+        return render(request,"manager/static_type.html")
+    else :
+        return HttpResponse("<h1>Seul l'administrateur peut accéder à cette page</h1>")
 
 def evolution(request):
-    return render(request,"manager/static_evolution.html")
+    if request.user.profile.group == "admin" :
+        return render(request,"manager/static_evolution.html")
+    else :
+        return HttpResponse("<h1>Seul l'administrateur peut accéder à cette page</h1>")
 
 def evolution_day(request):
-    return render(request,"manager/static_evolution_day.html")
+    if request.user.profile.group == "admin" :
+        month = datetime.now().strftime("%B")
+        return render(request,"manager/static_evolution_day.html",{"month":month})
+    else :
+        return HttpResponse("<h1>Seul l'administrateur peut accéder à cette page</h1>")
+
+#<--------------------------- Rest Framework API ----------------------------------->
+
+#send the new reclamations as a json format
+class ReclamationSetView(viewsets.ViewSet):
+    
+    permission_classes = (permissions.IsAuthenticated , IsManager,)
+
+    def list(self, request):
+        queryset = Requet.objects.filter(state = "ont étape de traitement")
+        serializer = ReclamationSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+#send the noted reclamations as a json format
+class NotesSetView(viewsets.ViewSet):
+    
+    permission_classes = (permissions.IsAuthenticated , IsManager,)
+
+    def list(self, request):
+        queryset = Requet.objects.filter(state = "notée")
+        serializer = ReclamationSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 #sending the data as a json format
 class DataChart(APIView):
 
-    authentication_classes = []
-    permission_classes = []
+    permission_classes = (permissions.IsAuthenticated , IsManager,)
 
     def get(self, request, format=None):
         techs = []

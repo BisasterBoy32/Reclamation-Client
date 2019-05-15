@@ -61,6 +61,21 @@ class Requet(models.Model):
         minute = (time.seconds % 3600) // 60
         return str(time.days) + "days ," + str(hours) + "Hour ," + str(minute) + "minutes"
 
+    # get the number of reclamation should hundle by the tech before this one   
+    def get_index(self):
+        tech = self.tech 
+        filters = Q(state = "apprové par l'administrateur" ) & Q(client__profile__type = "entreprise")
+        e_requets_numb = 0
+
+        if self.client.profile.type == "entreprise" :
+            requets = tech.works.all().filter(filters)
+            index = requets.filter(pub_date__lt = self.pub_date).count()
+        else :
+            e_requets_numb = tech.works.all().filter(filters).count()
+            requets = tech.works.all().filter(state = "apprové par l'administrateur").exclude(client__profile__type = "entreprise")
+            index = requets.filter(pub_date__lt = self.pub_date).count()
+        return index + e_requets_numb
+
 
 class Notification(models.Model):
 

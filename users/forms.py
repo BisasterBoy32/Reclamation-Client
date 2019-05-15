@@ -13,8 +13,8 @@ class UserForm(UserCreationForm):
         fields = ["username","email","password1","password2"]
 
         widgets = {
-        "username" : forms.TextInput(attrs={ "class":"form-control username" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Nom d'utilisateur"}),
-        "email" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Email Adress"}),
+        "username" : forms.TextInput(attrs={ "class":"form-control username" ,"id":"username" ,"aria-describedby":"emailHelp" ,"placeholder":"Nom d'utilisateur"}),
+        "email" : forms.TextInput(attrs={ "class":"form-control email" ,"id":"email" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre Email Adress"}),
         }
 
         labels = {
@@ -25,7 +25,7 @@ class UserForm(UserCreationForm):
         help_texts = {
             "username" : None ,
             "password" : _("le mot de passe doit comporter plus de 8 caractères" ),
-            "email" : ("votre email doit être unique")
+            "email" : None,
         }
 
 
@@ -73,10 +73,12 @@ class UserForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        self.fields['password1'].widget = forms.PasswordInput(attrs={"class":"form-control password" ,"id":"exampleInputPassword1" ,"placeholder":"mot de passe"})
-        self.fields['password2'].widget = forms.PasswordInput(attrs={"class":"form-control password" ,"id":"exampleInputPassword1" ,"placeholder":"Retaper Le mot de passe"})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={"class":"form-control password" ,"id":"pass1" ,"placeholder":"mot de passe"})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={"class":"form-control password" ,"id":"pass2" ,"placeholder":"Retaper Le mot de passe"})
         self.fields['password1'].label = ""
         self.fields['password2'].label = ""
+        self.fields['password1'].help_text = ""
+        self.fields['password2'].help_text = ""
 
 
   # <-----------------------------                Profile Form        --------------------------->
@@ -89,7 +91,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ["phone_number"]
         widgets = {
-                    "phone_number" : forms.TextInput(attrs={ "class":"form-control " ,"id":"exampleInputEmail1" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre telephone fix"}),
+                    "phone_number" : forms.TextInput(attrs={ "class":"form-control " ,"id":"phone" ,"aria-describedby":"emailHelp" ,"placeholder":"Votre telephone fix"}),
                     }
 
         labels = {

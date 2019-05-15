@@ -41,7 +41,7 @@
         {{ requet.problem }}
       </div>
       <div class="col-md-2 col-4">
-        {{ requet.state }}
+        {{ requet.state }} <span class="badge badge-primary badge-pill" >  {{ requet.get_index }} </span>
       </div>
       <div class="col-md-2 col-2">
         <form  action="{% url 'delete_requete' requet.id %}" method="get">

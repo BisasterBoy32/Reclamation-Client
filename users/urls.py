@@ -24,4 +24,7 @@ urlpatterns = [
     path("note/<int:id_u>/<int:id_r>/",views.note_view,name="note"),
     path("success_register/",views.success_register,name="success_register"),
     path('confirm_user/<slug:uidb64>/<slug:token>)/', views.confirm_user, name='confirm_user'),
+    path('username_valid/<str:username>/', views.username_validation, name='username_validation'),
+    path('email_valid/<str:email>/', views.email_validation, name='email_validation'),
+
 ]

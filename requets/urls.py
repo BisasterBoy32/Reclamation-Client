@@ -11,4 +11,5 @@ urlpatterns = [
     path("tech_requets",views.TechRequetListView.as_view(),name="tech_requets"),
     path("requet_fixée/<int:pk>/",views.FixRequetView.as_view(),name="requet_fixée"),
     path("success_view/<int:id>/",views.success_view,name="success_view"),
+
 ]

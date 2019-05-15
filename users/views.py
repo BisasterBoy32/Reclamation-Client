@@ -10,7 +10,7 @@ from .forms import( AddressPersonneChangeForm ,UserForm ,
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse ,JsonResponse
 from django.views.generic import DetailView
 from django.contrib.auth.mixins import UserPassesTestMixin , LoginRequiredMixin
 from manager.forms import NotificationForm
@@ -24,6 +24,17 @@ from django.conf import settings
 from .tokens import account_activation_token
 
 
+# username validation
+def username_validation(request ,username):
+    not_valid = User.objects.filter(username = username).exists()
+
+    return JsonResponse({"not_valid":not_valid})
+
+# email validation
+def email_validation(request ,email):
+    not_valid = User.objects.filter(email = email).exists()
+
+    return JsonResponse({"not_valid":not_valid})
 
 # Create your views here.
 

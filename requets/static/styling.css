@@ -30,7 +30,7 @@ body{
   font-family: 'Libre Baskerville', serif;
 }
 .register ,.login ,.login-tech{
-  background-color: #acdeaa;
+  background-color: rgb(143, 187, 175);
   border-radius: 5px;
 }
 .login {
@@ -180,6 +180,21 @@ body{
 }
 .new-reclamation{
   background-color: #ff0000;
+}
+.errors{
+  font-size: 16px;
+  color: #444444;
+}
+.valid{
+  color: #3a9679;
+}
+.not-valid{
+  color:#e16262;
+}
+.big-error{
+  border-radius: 4px;
+  background-color: #ff4057;
+  color: #ffffff;
 }
 /* ------------------------------- fc6b3f    nav bar styling ---------------------------------------------------*/
 

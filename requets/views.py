@@ -1,15 +1,13 @@
 from django.shortcuts import render , redirect ,get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView , DeleteView , ListView ,DetailView
-from .models import Requet
 from django.contrib import messages
-from .forms import RequetForm ,InternetRequetForm
 from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 
 from users.forms import UserForm ,ProfileForm
-
-
+from .forms import RequetForm ,InternetRequetForm
+from .models import Requet
 
 # Create your views here.
 def home(request):

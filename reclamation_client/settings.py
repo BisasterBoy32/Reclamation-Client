@@ -114,9 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
     # {
     #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     # },
-    {
-        'NAME' : 'users.custom_validators.MyCustomCommonPasswordValidator'
-    },
+    # {
+    #     'NAME' : 'users.custom_validators.MyCustomCommonPasswordValidator'
+    # },
     # {
     #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     # },

@@ -184,7 +184,7 @@ def requet_info(request ,id):
 def search_requet(request):
     if request.user.profile.group == "admin" :
         search_element = request.POST["search"]
-        requets = Requet.objects.filter(problem__icontains = search_element)
+        requets = Requet.objects.filter(Q(problem__icontains = search_element) & Q(state = "Problème Résolu"))
         return render(request,"manager/search_requet.html",{"requets" : requets})
 
 # <--------------------------- tech part ----------------------------------------------->
@@ -232,6 +232,7 @@ def register_admin(request):
                 user.set_password(user.password)
                 username = user.username
                 u_profile = Profile.objects.create(owner = user ,group = "admin")
+                u_profile.phone_number = request.POST["phone"]
                 u_profile.save()
                 messages.success(request,f"un compte de {username} admin est creé avec success")
                 return redirect("manager_requets")

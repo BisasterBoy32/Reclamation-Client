@@ -1,0 +1,58 @@
+{% extends 'requets/base2.html' %}
+
+{% block content %}
+
+
+<div class="m-4 p-3">
+   <div class="admincont">
+    <div class="contadmindiv"><h2 class="contadmin text-center"> Admin </h2></div>
+        <table class="table tech-table">
+            <thead class="table-head">
+                <tr class="table-tr">
+                <th scope="col-4">Nom/Prénom</th>
+                <th scope="col-4">Email</th>
+                <th scope="col-4">Numéro Téléphone </th>
+                </tr>
+            </thead>
+            {% for tech in techs %}
+            {% if tech.profile.group == "admin"%}
+<!--    *************************the admins*******************        -->
+            <tbody class="table-body">
+                <tr class="table-tr">
+                <td>{{ tech.first_name }} {{ tech.last_name }}</td>
+                <td><a class="a-hovered" href="mailto:{{  tech.email }}">{{  tech.email }}</a></td>
+                <td>{{  tech.profile.phone_number }}</td>
+                </tr>
+            </tbody>
+            {% endif %}
+            {% endfor %}
+            </table>
+      </div>
+      <div class="admincont">
+      <div class="contadmindiv">  <h2 class="conttech text-center"> Les Technicians </h2>  </div>
+            <table class="table tech-table">
+            <thead>
+                <tr class="table-tr">
+                <th scope="col-6">Nom/Prénom</th>
+                <th scope="col-3">Email</th>
+                <th scope="col-3">Numéro Téléphone </th>
+                </tr>
+            </thead>
+            {% for tech in techs %}
+            {% if tech.profile.group == "tech"%}
+<!--    *************************the techs *******************        -->
+            <tbody class="table-body">
+                <tr class="table-tr">
+                <td>{{ tech.first_name }} {{ tech.last_name }}</td>
+                <td><a class="a-hovered" href="mailto:{{  tech.email }}">{{  tech.email }}</a></td>
+                <td>{{  tech.profile.phone_number }}</td>
+                </tr>
+            </tbody>
+            {% endif %}
+            {% endfor %}
+            </table>
+  </div>
+
+</div>
+
+{% endblock %}

@@ -2,10 +2,11 @@
 
 {% block content %}
 
-<div class="container border p-4 m-4">
-    <p>Le problem est : {{ requet.problem }}</p>
-  Description de problem :
-  <p> {{ requet.content }}</p><br>
+<div class="container reqinfoh border p-4 m-4">
+  <h1 class="titlereqtech">la Reclamation</h1>
+    <h3 class="subtitlereqtech">Type de problem : </h3><h3 class="subtitlereqtecht">{{ requet.problem }}</h3>
+  <br/><h3 class="subtitlereqtech">Description de problem :</h3>
+  <p class="subtitlereqtechp"> {{ requet.content }}</p><br>
 </div>
 
 {% if requet.nots.count > 0 %}
@@ -23,73 +24,73 @@ Notifée Par le Client  : {{ requet.nots.last.owner.username  }}<br />
 
 {% if requet.client.profile.type == "personne"%}
 
-<div class="border mt-4 radius centered ">
+<div class="container reqinfoh border p-4 m-4 ">
 
   <div class="header-siuvi p-3 m-1 radius" >
-    <div class="text-center">
+    <div class="titleinfoclient">
         <h2> {{ client.username }} informations </h2>
       </div>
 
     </div>
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
         First Name
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.personne.first_name }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
         Last Name
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.personne.last_name }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
           Daira
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.address.region }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
           La Commune
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.address.commune }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
           Rue / N° de Logement
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.address.rue }} /  {{ client.profile.address.logement }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
         Telephone FIx
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.phone_number }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
        Date De Réclamation
        </div>
-        <div class="text-center col-6 ">
+        <div class="lefttechreq text-center col-6 ">
         {{ requet.pub_date|date:"d / m / Y, H : i" }}
        </div>
     </div>
@@ -118,55 +119,55 @@ Notifée Par le Client  : {{ requet.nots.last.owner.username  }}<br />
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
         Name
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.company.name }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
           Daira
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.address.region }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
           La Commune
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.address.commune }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
           Rue
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.address.rue }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
         Telephone FIx
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{ client.profile.phone_number }}
       </div>
     </div>
 
     <div class="row mb-3  pb-2 border-bottom client-info">
-      <div class="text-center col-6 ">
+      <div class="righttechreq text-center col-6 ">
         Date De Réclamation
       </div>
-      <div class="text-center col-6 ">
+      <div class="lefttechreq text-center col-6 ">
         {{  requet.pub_date|date:"d / m / Y, H : i" }}
       </div>
     </div>

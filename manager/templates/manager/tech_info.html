@@ -45,4 +45,84 @@
 
         </div>
 
+              <!--   reclamation de cette tech  -->
+
+        <h3 class="text-center border-bottom pb-2 mb-3 mt-3"> les réclamations dans le temps courant qui doivent être traitées par {{ tech.username }} Client </h3>
+        
+        <div class="border  p-1 mt-3 radius ">
+        
+          <div class="header-siuvi p-3 m-1 radius ">
+            <div class="row mb-3 border-bottom pb-2 ">
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-lg-1 col-2 text-center">
+                    N°:
+                  </div>
+        
+                  <div class="col-lg-7 col-6 text-center">
+                    Reclamation
+                  </div>
+                  <div class="col-lg-4 col-4 text-center">
+                    Date De Creation
+                  </div>
+                </div>
+              </div>
+        
+              <div class="col-6">
+                <div class="row">
+                 <div class="col-6 text-center">
+                   date d'approbation
+                  </div>
+                  <div class="col-3 text-center">
+                    client
+                  </div>
+                  <div class="col-3 text-center">
+                    Suprimer
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% for requet in tech.works.all %}
+            
+            {% if requet.state == "apprové par l'administrateur" %}
+            
+            <div class="row mt-3 border-bottom pb-2 rec-s">
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-lg-1 col-2 text-center mt-2">
+                    {{ requet.id }}
+                  </div>
+            
+                  <div class="col-lg-7 col-6 text-center mt-2">
+                    <a class="a-hovered" href="{% url 'edit_requet' requet.id %}"> {{ requet.problem }}
+                    </a>
+                  </div>
+                  <div class="col-lg-4 col-4 text-center mt-2">
+                    {{ requet.pub_date|date:"d/m/Y , H : i" }}
+                  </div>
+                </div>
+              </div>
+            
+              <div class="col-6">
+                <div class="row">
+                 <div class="col-6 text-center mt-2">
+                    {{ requet.aprove_date|date:"d/m/Y , H : i" }}
+                  </div>                 
+                  <div class="col-3 text-center mt-2">
+                      <a class="a-hovered" href="{% url 'manager_client_info' requet.client.id %}"> {{ requet.client }}</a>
+                  </div>
+                  <div class="col-3 text-center ">
+                    <form action="{% url 'manager_delete_requet' requet.id %}" method="get">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-outline-danger btn-sm mt-2"><i class="fas fa-backspace"></i></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+  {% endif %}
+  {% endfor %}
+
+
 {% endblock %}

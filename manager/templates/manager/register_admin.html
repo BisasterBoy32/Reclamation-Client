@@ -22,14 +22,18 @@
 
 {% block content %}
 
-        <div class="change-info mt-4 p-4">
+        <div class="mt-4 p-4 change-info">
 
           <form  action="{% url 'register_admin' %}" method="post">
             {% csrf_token %}
 
-            <legend class="text-center border-bottom mb-4">Ajouter an nouveau admin compte</legend>
+            <legend class="textstatictop text-center">Ajouter an nouveau admin compte</legend>
 
             {{ u_form.as_p }}
+              votre numéro de téléphone :
+              <input type="number" name="phone" class="form-control mt-2 mb-4" >
+
+
 
             <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">Ajouter </button>
           </form>

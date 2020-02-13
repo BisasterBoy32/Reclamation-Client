@@ -23,6 +23,7 @@ const numbers = /^(?=.*[0-9_\W]).+$/
 // the password validation
 pass1.addEventListener("input",function(e){
     // check if the pasword more than 8 chars
+    console.log(e.target.value)
     if ( this.value.length < 8 ){
         pass1Error2.classList.add("not-valid")
     }else{

@@ -7,8 +7,6 @@
 {% else %}
 
 <div class="header mb-4">
-      <h1 class="text-center"> <img id="AT" src="{% static 'img/algerieT.png' %}" ><span class="ml-4 ">Algerie Telecom Service de declaration</span>   </h1>
-</div>
 <div class="container">
 
 
@@ -20,12 +18,19 @@
   {% endfor %}
   {% endif %}
     <div class="row">
-      <div class="col-md-5 col-xs-12 ">
+        <div class="leftcol col-md-6 col-xs-12  ">
         <div class="p-3 login">
-            <form action="{% url 'login' %}" method="POST">
+          <div class="registration-header">
+              			     	<img src="{% static 'img/logoatt.png' %}" alt="" class="registration-logo" width=180px id="logoat">
+                          <h3 class="logo-titleone">algerie telecom</h3>
+                          <h3 class="login-titletwo">reclamation client</h3>
+              		      	</div>
+                          <h3 class="titleone">- Nous traitons toutes vos réclamations.</h3>
+                            <h3 class="titleone">- Gardez l’esprit tranquille avec le suivi de réclamations.</h3>
+            <form action="{% url 'login' %}" method="POST" class="loginform p-3 ">
               {% csrf_token %}
 
-              <legend class="text-center border-bottom mb-4"> Login </legend>
+              <h3 class="registration-title">Log in</h3>
                {% if error %}
                  <div class="alert alert-danger">
                     {{ error }}
@@ -52,9 +57,6 @@
       </div>
 
 
-      <div class="col-md-1 col-xs-0 ">
-
-      </div>
 
 
       <div class="col-md-6 col-xs-12 ">
@@ -62,23 +64,22 @@
           <form  id="user-form" action="{% url 'register' %}" method="post">
             {% csrf_token %}
 
-            <legend class="text-center border-bottom mb-4"> S'inscrire</legend>
-            <label > <strong> Je Sius : </strong></label>
+            <h3 class="registration-title">Register</h3>
+            <p class="registration-subtitle">it's completely free</p>
+            <div class="registerforrm">
+            <label > <div class="textjesuis"><strong> Je suis : </strong></div></label>
             <div class="cc-selector">
               <div class="row mb-3">
-                <div class="col-3">
-                </div>
-                <div class="col-3">
+
+                <div class="col-6">
                   <input id="personne" type="radio" name="type" value="personne" required/>
                   <label class="drinkcard-cc personne" for="personne"></label>
                 </div>
-                <div class="col-3">
+                <div class="col-6">
                   <input id="enterprise" type="radio" name="type" value="entreprise" />
                   <label class="drinkcard-cc enterprise"for="enterprise"></label >
                 </div>
-                <div class="col-3">
 
-                </div>
               </div>
             </div>
             <div class="info-entreprise mb-3" >
@@ -124,13 +125,13 @@
                {{ p_form.as_p }}
               <ul  >
               <li id="t-error"  >
-               entrez un numéro de téléphone fixe s'il vous plaît (commence par 0 et contient neuf chiffres) 
+               entrez un numéro de téléphone fixe s'il vous plaît (commence par 0 et contient neuf chiffres)
                </li>
               </ul>
             </div>
 
-            
-            
+
+
 
             <div class="info-entreprise mt-3">
               <label for="">L'address de votre entreprise :</label>
@@ -156,7 +157,7 @@
 
               <input id="p_commune" class="form-control mb-3" type="text" placeholder="La Commune" name="commune" >
               <input id="p_rue" class="form-control mb-3" type="text" placeholder="La Rue" name="rue" >
-              <input id="p_logement" class="form-control mb-3" type="text" placeholder="N° de Logement" name="logement" >
+              <input id="p_logement" class="form-control mb-3 error-border" type="text" placeholder="N° de Logement" name="logement" >
             </div>
 
             <button id="btn" class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">S'inscrire</button>

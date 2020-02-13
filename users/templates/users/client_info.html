@@ -5,10 +5,10 @@
   {% if request.user.profile.type == "personne" %}
         <div class="change-info mt-4 p-4">
 
-          <form  action="{% url 'client_info' %}" method="post">
+          <form  action="{% url 'client_info' %}" method="post" class="clinfo">
             {% csrf_token %}
 
-            <legend class="text-center border-bottom mb-4">les information de {{ user }} client</legend>
+            <legend class="text-center mb-4"><h1 class="reqinfixtitle">les information de {{ user }} client</h1></legend>
             {% if error1 %}
             <div class="errorlist">
                     {{ error1 }}
@@ -29,10 +29,10 @@
 
   <div class="change-info mt-4 p-4">
 
-    <form  action="{% url 'entreprise_info' %}" method="post">
+    <form  action="{% url 'entreprise_info' %}" method="post" class="clinfo">
       {% csrf_token %}
 
-      <legend class="text-center border-bottom mb-4">les information de {{ user }} client</legend>
+      <legend class="text-center mb-4"><h1 class="reqinfixtitle">les information de {{ user }} client</h1></legend>
       {% if error1 %}
       <div class="errorlist">
               {{ error1 }}
@@ -44,7 +44,7 @@
       {{ p_form.as_p }}
       {{ a_form|crispy }}
 
-      <button class="btn btn-primary btn-block btn-sm inscrire" type="submit" name="button">Changer mes information </button>
+      <button class="btn btn-primary btn-block btn-sm changeinfobtn" type="submit" name="button">Changer mes information </button>
     </form>
 
   </div>

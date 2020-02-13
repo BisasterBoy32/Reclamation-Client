@@ -5,10 +5,10 @@
 
 <div class="change-info mt-4 p-4">
 
-  <form  action="{% url 'create_requete_internet' %}" method="post">
+  <form class="formreqint" action="{% url 'create_requete_internet' %}" method="post">
     {% csrf_token %}
 
-    <legend class="text-center border-bottom mb-4"> écrivez une description de votre problème </legend>
+    <legend class="text-center mb-4"><h1 class="reqinfixtitle"> écrivez une description de votre problème</h1> </legend>
     {% if error1 %}
     <div class="errorlist">
             {{ error1 }}

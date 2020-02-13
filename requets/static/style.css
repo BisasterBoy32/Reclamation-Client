@@ -1,0 +1,762 @@
+/* client */
+.container {
+margin-top: 35px;
+}
+.col-md-6
+{
+background-color: #31425a;
+padding-top: 15px;
+padding-bottom: 15px;
+border-radius: 0px 50px 50px 0px;
+}
+.leftcol.col-md-6.col-xs-12 {
+  background-color: #31425a;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 50px 0px 0px 50px;
+}
+
+.register{
+background-color: #1fd5b9;
+border-radius: 40px;
+margin-top: 20px;
+margin-bottom: 20px;
+margin-right: 15px;
+margin-left: 15px;
+}
+.row {
+margin-right: 60px;
+margin-left: 60px;
+}
+.registration-title {
+font-size: 28px;
+font-weight: 300;
+text-transform: uppercase;
+margin-bottom: 5px;
+text-align: center;
+color: #31425a;
+    padding-left: 130px;
+}
+.registration-subtitle {
+font-weight: 300;
+font-size: 14px;
+color: rgba(23, 20, 90, 0.92);
+text-transform: uppercase;
+margin-bottom: 25px;
+text-align: center;
+}
+.helptext {
+font-size: 12px;
+font-weight: 200;
+display: inline-block;
+margin-left: 7px;
+}
+#exampleInputEmail1 {
+border-radius: 15px;
+background: transparent;
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#exampleInputPassword1 {
+border-radius: 15px;
+background: transparent;
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#exampleFormControlSelect1 {
+border-radius: 15px;
+background: rgba(206, 206, 206, 0.42);
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+.btn.btn-primary.btn-block.btn-sm.inscrire {
+padding: 14px 7px;
+color: white;
+font-size: 14px;
+font-weight: 100;
+text-transform: uppercase;
+border: none;
+margin-bottom: 25px;
+background: #31425a;
+width: 240px;
+margin: auto;
+border-radius: 25px;
+}
+label {
+font-size: 20px;
+font-weight: 200;
+display: inline-block;
+margin-left: 7px;
+}
+.loginform {
+background-color: rgba(236, 250, 255, 0.83);
+border-radius: 40px;
+margin-top: 80px;
+margin-bottom: 20px;
+margin-right: 15px;
+margin-left: 15px;
+padding-left: 20px;
+padding-right: 20px;
+}
+.form-check-input{
+display: inline-block;
+position: relative;
+border: 1px solid #99b0bc;
+min-width: 22px;
+min-height: 22px;
+max-width: 22px;
+max-height: 22px;
+overflow: hidden;
+margin-top: 7px;
+margin-left: -15px;
+}
+#emailHelp {
+font-size: 12px;
+font-weight: 200;
+display: inline-block;
+margin-left: 7px;
+}
+.text-muted {
+font-size: 12px;
+font-weight: 200;
+display: inline-block;
+margin-left: 7px;
+}
+.logo-titleone {
+float: right;
+margin-top: 25px;
+margin-right: 17px;
+font-size: 28px;
+font-weight: 300;
+text-transform: uppercase;
+margin-bottom: 5px;
+text-align: center;
+color: rgba(236, 250, 255, 0.83);
+}
+.login-titletwo {
+font-weight: 300;
+font-size: 17px;
+text-transform: uppercase;
+margin-bottom: 60px;
+text-align: center;
+color: #1fd5b9;
+margin-left: 165px;
+}
+.titleone {
+font-size: 25px;
+font-weight: 200;
+margin-left: 15px;
+color: rgba(236, 250, 255, 0.83);
+}
+.footerat {
+padding: 14px 50px;
+color: white;
+font-size: 20px;
+font-weight: 100;
+text-transform: uppercase;
+border: none;
+margin-bottom: 25px;
+background: #31425a;
+width: 330px;
+margin: auto;
+border-radius: 25px;
+margin-top: 10px;
+}
+.formp {
+background-color: #1fd5b9;
+border-radius: 40px;
+margin-top: 17px;
+margin-bottom: 17px;
+margin-right: 17px;
+margin-left: 17px;
+padding-left: 50px;
+padding-right: 50px;
+padding-bottom: 20px;
+padding-top: 30px;
+}
+.change-info{
+background-color: #31425a;
+border-radius: 40px;
+margin-right: 50px;
+margin-left: 50px;
+}
+.text-center{
+font-size: 28px;
+font-weight: 300;
+text-transform: uppercase;
+margin-bottom: 5px;
+text-align: center;
+color: #31425a;
+}
+.textjesuis {
+font-size: 21px;
+font-weight: 300;
+text-transform: uppercase;
+margin-bottom: -10px;
+text-align: center;
+color: #31425a;
+}
+#f_name {
+border-radius: 15px;
+background: transparent;
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#l_name {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#username {
+border-radius: 15px;
+background: transparent;
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#email {
+border-radius: 15px;
+background: transparent;
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#pass1 {
+border-radius: 15px;
+background: transparent;
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#pass2 {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#phone {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#p_commune {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#p_rue {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#p_logement {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#p_region {
+border-radius: 15px;
+background: rgba(206, 206, 206, 0.39);
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#e_name {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#e_commune {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#e_rue {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+#e_region {
+  border-radius: 15px;
+  background: rgba(206, 206, 206, 0.39);
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+.errorlist{
+  color: #800000;
+background-color: #ffcccc;
+border-radius: 20px;
+list-style-type: none;
+letter-spacing: 2px;
+font-size: 14px;
+padding-top: 5px;
+padding-bottom: 5px;
+}
+ul {
+font-size: 12px;
+font-weight: 200;
+margin-left: 7px;
+}
+.navbar.navbar-light.navbar-expand-lg.navbar-custom {
+background-color: #31425a;
+border-radius: 50px;
+margin-right: 15px;
+margin-left: 14px;
+margin-top: 15px;
+}
+.testlogo {
+font-size: 18px;
+float: right;
+margin-top: 35px;
+font-weight: 300;
+text-transform: uppercase;
+color: #1fd5b9;
+}
+.nav-link {
+font-size: 15px;
+margin-top: 5px;
+font-weight: 300;
+text-transform: uppercase;
+color: #31425a;
+background-color: #1fd5b9;
+border-radius: 30px;
+margin-left: 9px;
+}
+.a-simple{
+  text-decoration: none;
+  color: black;
+}
+.a-simple:hover{
+  text-decoration: none;
+  color: black;
+}
+.fas.fa-wifi.fa-10x {
+background-color: #1fd5b9;
+padding-right: 20px;
+padding-left: 20px;
+padding-top: 20px;
+padding-bottom: 20px;
+border-radius: 40px;
+margin-top: 40px;
+}
+.pint {
+font-size: 28px;
+font-weight: 300;
+text-transform: uppercase;
+color: #31425a;
+background-color: #1fd5b9;
+padding: 8px 8px 8px 8px;
+border-radius: 40px;
+}
+.fas.fa-phone-slash.fa-10x {
+background-color: #1fd5b9;
+padding-right: 20px;
+padding-left: 20px;
+padding-top: 20px;
+padding-bottom: 20px;
+border-radius: 40px;
+margin-top: 40px;
+}
+.bodychose {
+margin-top: 35px;
+background-color: #31425a;
+border-radius: 70px;
+padding-bottom: 30px;
+}
+.intp {
+margin-left: -40px;
+}
+.tlfnp {
+margin-left: -40px;
+}
+.mb-4.text-center.text-choose {
+margin-right: 43px;
+}
+.reqinfixtitle {
+margin-top: 25px;
+margin-right: 17px;
+font-size: 28px;
+font-weight: 300;
+text-transform: uppercase;
+margin-bottom: 5px;
+text-align: center;
+color: rgba(236, 250, 255, 0.83);
+background-color: #31425a;
+padding: 10px 10px 10px 10px;
+border-radius: 35px;
+}
+.formreqint {
+background-color: #1fd5b9;
+margin-bottom: 15px;
+margin-right: 10px;
+margin-left: 10px;
+padding: 10px 30px 20px 30px;
+border-radius: 50px;
+}
+.col-form-label.requiredField {
+font-size: 21px;
+font-weight: 300;
+text-transform: uppercase;
+margin-bottom: 9px;
+text-align: center;
+color: #31425a;
+}
+#id_problem{
+border-radius: 15px;
+background: rgba(206, 206, 206, 0.39);
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#exampleFormControlTextarea1 {
+border-radius: 15px;
+background: rgba(206, 206, 206, 0.68);
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+.header-siuvi {
+background-color: #31425a;
+padding-top: 30px;
+padding-bottom: 30px;
+border-radius: 40px;
+}
+.btn.btn-outline-danger.btn-sm {
+margin-top: 9px;
+}
+.container-fluid {
+margin-bottom: 20px;
+}
+.row.hs {
+background-color: rgba(236, 250, 255, 0.83);
+padding-right: 30px;
+border-radius: 20px;
+padding: 15px 35px 0px 16px;
+}
+.clinfo {
+background-color: #1fd5b9;
+margin-bottom: 15px;
+margin-right: 10px;
+margin-left: 10px;
+padding: 10px 30px 20px 30px;
+border-radius: 50px;
+}
+#id_region {
+border-radius: 15px;
+background: rgba(206, 206, 206, 0.39);
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#id_rue {
+border-radius: 15px;
+background: transparent;
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#id_logement {
+border-radius: 15px;
+background: transparent;
+letter-spacing: 1px;
+font-size: 20px;
+border: 1px solid #082abc;
+}
+#id_commune {
+  border-radius: 15px;
+  background: transparent;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #082abc;
+}
+.changeinfobtn{
+padding: 14px 7px;
+color: white;
+font-size: 14px;
+font-weight: 100;
+text-transform: uppercase;
+border: none;
+margin-bottom: 25px;
+background: #31425a;
+width: 225px;
+margin: auto;
+border-radius: 25px;}
+.row.hr.mt-3.border-bottom.pb-2 {
+background-color: #1fd5b9;
+border-radius: 20px;
+padding-top: 13px;
+}
+.card{
+  background-color: #9fd3c7;
+}
+.rec-s{
+  background-color: #ff5959;
+}
+.rec-a{
+  background-color: #fccf4d;
+}
+.rec-r1{
+  background-color: #85ef47;
+}
+.rec-r2{
+  background-color: #00bd56;
+}
+.btn-delete{
+  border : none;
+}
+.btn-delete:hover{
+  color : #ff5959;
+}
+.p-3.login-tech{
+  background-color: #31425a;
+  border-radius: 50px;
+  margin-top: 70px;
+  }
+}
+.logintechform {
+background-color: rgba(236, 250, 255, 0.83);
+border-radius: 40px;
+margin-top: 20px;
+margin-bottom: 20px;
+margin-right: 15px;
+margin-left: 15px;
+padding-left: 20px;
+padding-right: 20px;
+}
+
+.colheadrea{
+  background-color: #1fd5b9;
+  width: 114px;
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+
+}
+.colheadreas {
+    margin-top: 10px;
+    border-radius: 30px;
+    text-align: center;
+}
+.btn-outline-danger {
+    color: #000000;
+    border-color: #0e418a;
+}
+button.btn.btn-outline-danger.btn-sm.mt-2 {
+    margin-bottom: 10px;
+}
+i.far.fa-smile.fa-lg {
+    margin-top: 8px;
+}
+.badge-primary {
+    color: #fff;
+    background-color: #000000;
+}
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    border-radius: 25px;
+    text-align: center;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    border-radius: 25px;
+    text-align: center;
+}
+/* Technicien */
+.logintechText {
+    float: right;
+    margin-top: 25px;
+    font-size: 28px;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    text-align: center;
+    color: rgba(236, 250, 255, 0.83);
+}
+.titreatech {
+    font-weight: 300;
+    font-size: 22px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    background-color: rgba(236, 250, 255, 0.83);
+}
+.reatech {
+    font-weight: 300;
+    font-size: 17px;
+    text-transform: uppercase;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    color: #1fd5b9;
+}
+th {
+    font-weight: 300;
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 20px;
+    background-color: rgba(236, 250, 255, 0.83);
+}
+.admincont {
+    background-color: #31425a;
+    border-radius: 40px;
+}
+td {
+    font-weight: 300;
+    font-size: 17px;
+    text-transform: uppercase;
+    color: #1fd5b9;
+    text-align: center;
+}
+table {
+    border-collapse: initial;
+}
+.contadmin {
+    padding: 14px 7px;
+    color: #212529;
+    font-size: 28px;
+    text-transform: uppercase;
+    border: none;
+    margin-bottom: 24px;
+    background: #1fd5b9;
+    width: 225px;
+    margin: auto;
+    border-radius: 25px;
+}
+.contadmindiv {
+    padding: 18px 0px 23px 0px;
+}
+.tech-table {
+    padding: 15px 34px 34px 34px;
+}
+.conttech {
+    padding: 14px 7px;
+    color: #212529;
+    font-size: 28px;
+    text-transform: uppercase;
+    border: none;
+    margin-bottom: 24px;
+    background: #1fd5b9;
+    width: 300px;
+    margin: auto;
+    border-radius: 25px;
+}
+.reqinfoh {
+    background-color: #31425a;
+    border-radius: 40px;
+}
+.titlereqtech {
+    padding: 15px 18px;
+    color: #31425a;
+    font-size: 26px;
+    text-transform: uppercase;
+    border: none;
+    margin-bottom: 24px;
+    background: #1fd5b9;
+    width: 272px;
+    margin: auto;
+    text-align: center;
+    border-radius: 25px;
+}
+h3 {
+   font-size: 1.75rem;
+   display: inline-block;
+}
+.subtitlereqtech {
+    color: #1fd5b9;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin: 15px 26px;
+}
+.subtitlereqtecht {
+    color: #dee2e6;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin: 15px 26px;
+}
+.subtitlereqtechp {
+    color: #dee2e6;
+    font-size: 21px;
+    text-transform: uppercase;
+    margin: 15px 54px;
+}
+.titleinfoclient {
+    padding: 15px 18px;
+    color: #31425a;
+    font-size: 26px;
+    text-transform: uppercase;
+    border: none;
+    margin-bottom: 24px;
+    background: #1fd5b9;
+    text-align: center;
+    border-radius: 25px;
+}
+.righttechreq {
+    color: #31425a;
+    font-weight: 300;
+    font-size: 28px;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 20px;
+    background-color: rgba(236, 250, 255, 0.83);
+}
+.lefttechreq {
+    font-weight: 300;
+    font-size: 27px;
+    text-transform: uppercase;
+    color: #1fd5b9;
+    text-align: center;
+}
+/*.btn-outline-danger {
+    background: red;
+    width: 270px;
+    margin: auto;
+}
+.btn-outline-success {
+  background: mediumspringgreen;
+  color: white;
+  width: 425px;
+  text-align: center;
+  margin: auto;
+  padding: 15px 15px 15px 15px;
+  font-size: 20px;
+  text-transform: uppercase;
+  border-radius: 30px;
+}
+.btn-outline-danger {
+    background: red;
+    width: 425px;
+    margin: auto;
+    padding: 15px 15px 15px 15px;
+    font-size: 20px;
+    text-transform: uppercase;
+    border-radius: 30px;
+}
+/* -- manager -- */
+.admin-icon {
+    width: 200px;
+}

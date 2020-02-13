@@ -4,6 +4,9 @@ from django.views.generic import CreateView , DeleteView , ListView ,DetailView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.db.models import Q
+from django.contrib.auth.models import User
 
 from users.forms import UserForm ,ProfileForm
 from .forms import RequetForm ,InternetRequetForm
@@ -91,6 +94,15 @@ class TechRequetListView(LoginRequiredMixin , UserPassesTestMixin ,ListView):
     def test_func(self):
         return self.request.user.profile.group == "tech"
 
+
+# page contact de tech
+@login_required
+def techContact(request):
+    if request.user.profile.group == "tech" :
+        techs = User.objects.filter(Q(profile__group ="tech") | Q(profile__group = "admin")) 
+    return render(request ,"requets/contact.html",{"techs":techs})
+
+
 # Client part problem resolu avec success
 @login_required
 def success_view(request , id):
@@ -103,3 +115,5 @@ def success_view(request , id):
         return redirect("siuvi_requete")
     else :
         return HttpResponse("<h1>403 Forbidden</h1>")
+
+

@@ -32,11 +32,12 @@
 
 {% block content %}
 
-<h1 class="text-center" > Réparition Des Reclamation Par Les Techniciens </h1>
+<h1 class=" textstatictop text-center" > Réparition Des Reclamation Par Les Techniciens </h1>
 
-
+<div class="chartstatic">
 <canvas id="myChart" width="400" height="140"></canvas>
 <script type="text/javascript" src="{% static 'chart/chart_script.js' %}">
 
 </script>
+</div>
 {% endblock %}

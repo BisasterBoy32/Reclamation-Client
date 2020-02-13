@@ -43,11 +43,11 @@
   <div class="row mb-3 border-bottom pb-2 ">
     <div class="col-4">
       <div class="row">
-        <div class="col-lg-6 col-6 text-center">
+        <div class=" adminclpnu col-lg-6 col-6 text-center">
           Nom d'utilusateur
         </div>
 
-        <div class="col-lg-6 col-6 text-center">
+        <div class="adminclpn col-lg-6 col-6 text-center">
           Nom
         </div>
       </div>
@@ -55,13 +55,13 @@
 
     <div class="col-8">
       <div class="row">
-        <div class="col-3 text-center">
+        <div class="adminclpp col-3 text-center">
           Prenom
         </div>
-        <div class="col-6 text-center">
+        <div class="adminclpe col-6 text-center">
           Email adress
         </div>
-        <div class="col-3 text-center">
+        <div class="adminclps col-3 text-center">
           Suprimer
         </div>
       </div>
@@ -73,11 +73,11 @@
     <div class="row mt-3 border-bottom pb-2 ">
       <div class="col-4">
         <div class="row">
-          <div class="col-6 text-center">
+          <div class="adminclient col-6 text-center">
           <a class="a-hovered" href="#"></a> <a class="a-hovered" href="{% url 'manager_client_info' client.id %}"> {{ client.username }}</a>
           </div>
 
-          <div class="col-6 text-center">
+          <div class="adminclient col-6 text-center">
             {{ client.profile.personne.first_name }}
           </div>
         </div>
@@ -85,14 +85,14 @@
 
       <div class="col-8 ">
         <div class="row">
-          <div class="col-3 text-center">
+          <div class="adminclient col-3 text-center">
             <span class="mr-1">{{ client.profile.personne.last_name }}
         </div>
-        <div class="col-6 text-center">
+        <div class="adminclient col-6 text-center">
           <span class="mr-1">{{ client.email }}
       </div>
 
-        <div class="col-3 text-center">
+        <div class="adminclient col-3 text-center">
           <form  action="{% url 'delete_personne' client.id %}" method="get">
             {% csrf_token %}
               <button type="submit" class="btn btn-outline-danger btn-sm" ><i class="fas fa-backspace"></i></button>
